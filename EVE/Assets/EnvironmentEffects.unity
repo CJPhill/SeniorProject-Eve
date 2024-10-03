@@ -15,12 +15,12 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.85197186, g: 0.82436806, b: 0.55472845, a: 1}
+  m_FogColor: {r: 0.85971946, g: 0.8335604, b: 0.5780334, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5855211, g: 0.21545066, b: 0.21545066, a: 1}
+  m_AmbientSkyColor: {r: 0.6072144, g: 0.25651294, b: 0.25651294, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44622374, g: 0.4960084, b: 0.5745963, a: 1}
+  m_IndirectSpecularColor: {r: 0.39801562, g: 0.41629025, b: 0.41318247, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -261,9 +261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DirectionalLight: {fileID: 666716116}
   Preset: {fileID: 11400000, guid: fa3c9d9839c2247ec89cdc0e7d550da0, type: 2}
-  timeOfDay: 5.170816
-  speedMultiplier: 10
-  nightSpeed: 4.98
+  timeOfDay: 6.1563106
+  speedMultiplier: 0
+  nightSpeed: 10
   maxIntensity: 1.5
   maxShadowStrength: 1
   minShadowStrength: 0.2
@@ -278,8 +278,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.95559156, g: 0.6797843, b: 0.6797843, a: 1}
-  m_Intensity: 0.75
+  m_Color: {r: 0.95791584, g: 0.696544, b: 0.696544, a: 1}
+  m_Intensity: 0.7695388
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -288,7 +288,7 @@ Light:
     m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 0.2
+    m_Strength: 0.22084141
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -336,7 +336,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666716114}
-  m_LocalRotation: {x: -0.009441324, y: 0.9903324, z: 0.10791475, w: 0.08664292}
+  m_LocalRotation: {x: 0.0017831711, y: 0.9959862, z: -0.020381724, w: 0.087137565}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
