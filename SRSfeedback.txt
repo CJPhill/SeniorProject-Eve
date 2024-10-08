@@ -1,0 +1,42 @@
+
+Documentation Feedback ~ Deliverable #2
+Software Requirements Specification
+Initial Development Schedule
+CMSI 4071 Fall 2024
+=======================================
+
+COMPONENT BREAKDOWN:
+   Nice work on this section.  Nothing to add here.
+
+FUNCTIONAL REQUIREMENTS:
+   This is very complete and comprehensive with the exception of the Game
+   Manager section 5.3.1.3.  One requirement is not enough for this main
+   component of the game.  You list all keyboard and mouse inputs but you
+   should specify what each one is and what it does in the game as 'shall'
+   statements.  Trying to cover that with "in relation to how they would
+   influence the GUI" is nowhere near specific enough.
+
+   EVERYTHING else is good in this section!
+
+PERFORMANCE REQUIREMENTS:
+   Perfect, nothing to add.
+
+ENVIRONMENT REQUIREMENTS:
+   Perfect, nothing to add.
+
+OVERALL ASSESSMENT:
+   Category                          Points
+   Component Breakdown                 1/1
+   Functional Requirements           3.5/4
+   Performance Requirements            2/2
+   Environment Requirements            1/1
+                                     =====
+   Subtotal                            8/8
+   Preliminary Schedule                2/2
+   ------------------------------------------------------
+   Total Percentage:   9.5/10 = 95% which is an A
+
+Fix that one section as mentioned above and commit by the end of the semester
+for full credit on this document.
+
+Great job.... keep up the good work!
