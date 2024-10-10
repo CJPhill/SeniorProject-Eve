@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public SpriteRenderer rbSprite;
 
+    public bool menuActive = false;
+
+    [SerializeField] private GameObject menu = null;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -19,7 +23,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            menuActive = !menuActive;
+            menu.SetActive(menuActive);
+        }
+
         RaycastHit hit;
         Vector3 castPos = transform.position;
         castPos.y += 1;
