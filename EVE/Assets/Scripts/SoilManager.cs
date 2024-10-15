@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlantGrowth : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PlantGrowth : MonoBehaviour
     private int currentStage = 0; 
     private bool isGrowing = false;
     private bool isHarvested = false;
+    private InventoryItem holding = null;
+    //private bool soilHoed = false;
     public InventoryManager inventoryManager;
 
     void Start()
@@ -33,6 +36,16 @@ public class PlantGrowth : MonoBehaviour
 
     void OnMouseDown()
     {
+        holding = inventoryManager.ItemHeld();
+        if (holding == null)
+        {
+            Debug.Log(holding);
+        }
+        else
+        {
+            Debug.Log(holding.gameObject.GetComponent<Image>().sprite.name);
+        }
+        
         if (isHarvested)
         {
             
@@ -40,14 +53,23 @@ public class PlantGrowth : MonoBehaviour
         }
 
         if (!isGrowing)
-        {        
-            if (instantiatedStages.Count > 0)
+        {
+            if (holding != null && holding.gameObject.GetComponent<Image>().sprite.name == "Seed")
             {
-                instantiatedStages[currentStage].SetActive(true);
+                if (instantiatedStages.Count > 0)
+                {
+                    instantiatedStages[currentStage].SetActive(true);
+                }
+                isGrowing = true;
+                StartCoroutine(GrowPlant());
             }
-            isGrowing = true;
-            StartCoroutine(GrowPlant());
+            else
+            {
+                Debug.Log("You must plant a seed!");
+            }
+            
         }
+
 
         if (currentStage == instantiatedStages.Count - 1)
         {
@@ -62,18 +84,6 @@ public class PlantGrowth : MonoBehaviour
     }
 
 
-    public void GetSelectedItem()
-    {
-        Item receivedItem = inventoryManager.GetSelectedItem(false);
-        if (receivedItem != null)
-        {
-            Debug.Log("Received item: " + receivedItem);
-        }
-        else
-        {
-            Debug.Log("No item received!");
-        }
-    }
 
     public void UseSelectedItem()
     {
@@ -117,10 +127,19 @@ public class PlantGrowth : MonoBehaviour
 
     public void Harvest()
     {
-        GetItem(seedInSoil[0]);
-        isGrowing = false;
-        instantiatedStages[currentStage].SetActive(false); 
-        isHarvested = true; 
+        if (holding != null && holding.gameObject.GetComponent<Image>().sprite.name == "Pickaxe") // will be a hoe later but is not now bc that isn't spawning right away
+        {
+            GetItem(seedInSoil[0]);
+            isGrowing = false;
+            instantiatedStages[currentStage].SetActive(false);
+            isHarvested = true;
+        }
+
+        else
+        {
+            Debug.Log("Please use a Hoe to harvest a plant!");
+        }
+        
     }
 
     void ResetPlant()
