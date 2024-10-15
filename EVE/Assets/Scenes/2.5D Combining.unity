@@ -1711,6 +1711,18 @@ PrefabInstance:
       propertyPath: lightingManager
       value: 
       objectReference: {fileID: 1964069042}
+    - target: {fileID: 2413043539642871763, guid: 86e3369fe3ca24f92b981c0106b79f55, type: 3}
+      propertyPath: inventoryManager
+      value: 
+      objectReference: {fileID: 176616195}
+    - target: {fileID: 2413043539642871763, guid: 86e3369fe3ca24f92b981c0106b79f55, type: 3}
+      propertyPath: seedInSoil.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413043539642871763, guid: 86e3369fe3ca24f92b981c0106b79f55, type: 3}
+      propertyPath: seedInSoil.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b45c8be126614da6a8815e42a135aa7, type: 2}
     - target: {fileID: 4143062901787193233, guid: 86e3369fe3ca24f92b981c0106b79f55, type: 3}
       propertyPath: m_RootOrder
       value: 4
