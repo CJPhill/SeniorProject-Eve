@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 7303653632923737347}
   - component: {fileID: 8987152450642225977}
   m_Layer: 0
-  m_Name: SoilManager
+  m_Name: Soil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,7 +143,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2401249285129057977}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.35239485, y: 2.63, z: 1.7075912}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5.552, y: 5.552, z: 5.552}
   m_ConstrainProportionsScale: 0
   m_Children:
