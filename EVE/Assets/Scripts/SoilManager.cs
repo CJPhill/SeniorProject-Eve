@@ -8,12 +8,13 @@ public class PlantGrowth : MonoBehaviour
     [SerializeField] private List<GameObject> growthStagePrefabs; 
     [SerializeField] private Transform plantSpawnPoint; 
     [SerializeField] public LightingManager lightingManager;
-    
+
+    public Item[] seedInSoil;
     private List<GameObject> instantiatedStages = new List<GameObject>(); 
     private int currentStage = 0; 
     private bool isGrowing = false;
-    private bool isHarvested = false; 
-
+    private bool isHarvested = false;
+    public InventoryManager inventoryManager;
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class PlantGrowth : MonoBehaviour
     {
         if (isHarvested)
         {
+            
             ResetPlant();
         }
 
@@ -51,6 +53,38 @@ public class PlantGrowth : MonoBehaviour
         {
             // Debug.Log("Plant is fully grown!");
             Harvest();
+        }
+    }
+
+    public void GetItem(Item item)
+    {
+        inventoryManager.AddItem(item);
+    }
+
+
+    public void GetSelectedItem()
+    {
+        Item receivedItem = inventoryManager.GetSelectedItem(false);
+        if (receivedItem != null)
+        {
+            Debug.Log("Received item: " + receivedItem);
+        }
+        else
+        {
+            Debug.Log("No item received!");
+        }
+    }
+
+    public void UseSelectedItem()
+    {
+        Item receivedItem = inventoryManager.GetSelectedItem(true);
+        if (receivedItem != null)
+        {
+            Debug.Log("Used item: " + receivedItem);
+        }
+        else
+        {
+            Debug.Log("No item used!");
         }
     }
 
@@ -83,6 +117,7 @@ public class PlantGrowth : MonoBehaviour
 
     public void Harvest()
     {
+        GetItem(seedInSoil[0]);
         isGrowing = false;
         instantiatedStages[currentStage].SetActive(false); 
         isHarvested = true; 
