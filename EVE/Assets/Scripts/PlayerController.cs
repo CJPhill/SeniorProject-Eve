@@ -1,11 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
+    public float moveSpeed;
     public float groundDist;
+    public int playerHeight;
+
+    [Header("Player Movement")]
+    private Vector2 moveInput;
+
+
+    [Header("Slope Handling")]
+    public float maxSlopeAngle;
+    private RaycastHit slopeHit;
+
 
 
     public LayerMask terrainLayer;
@@ -23,38 +35,49 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        
+        checkESC();
+        movePlayer();
+
+    }
+
+    /// <summary>
+    /// ITEMS RELATED to UI/Keys
+    /// </summary>
+    private void checkESC()
+    {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             menuActive = !menuActive;
             menu.SetActive(menuActive);
         }
+    }
+    
+    /// <summary>
+    /// Movement related code
+    /// </summary>
+    private void movePlayer()
+    {
+        moveInput.x = Input.GetAxisRaw("Horizontal");
+        moveInput.y = Input.GetAxisRaw("Vertical");
+        moveInput.Normalize();
 
-        RaycastHit hit;
-        Vector3 castPos = transform.position;
-        castPos.y += 1;
-        if (Physics.Raycast(castPos, -transform.up, out hit, Mathf.Infinity, terrainLayer))
-        {
-            if (hit.collider != null)
-            {
-                Vector3 movePos = transform.position;
-                movePos.y = hit.point.y + groundDist;
-                transform.position = movePos;
-            }
-        }
+        rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed);
+        
 
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-        Vector3 moveDir = new Vector3(x, 0, y);
-        rb.velocity = moveDir * speed;
+        
 
-        if (x != 0 && x < 0)
+
+        //Sprite Flipping
+        if (moveInput.x != 0 && moveInput.x < 0)
         {
             rbSprite.flipX = true;
-        }
-        else if (x != 0 && x > 0) 
-        { 
+        } 
+        else if (moveInput.x != 0 && moveInput.x > 0)
+        {
             rbSprite.flipX = false;
         }
-
     }
+
+    
 }
