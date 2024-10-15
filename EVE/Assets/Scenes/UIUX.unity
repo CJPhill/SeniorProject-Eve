@@ -755,6 +755,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2479788934833450362, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479788934833450362, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479788934833450362, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1084826867}
+    - target: {fileID: 2479788934833450362, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: NewGameDialogYes
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479788934833450362, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479788934833450362, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2592667432967501781, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -843,6 +867,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1084826867}
+    - target: {fileID: 6693390763806223658, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6868271883675828613, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1003,12 +1031,19 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9099907284240542645, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+      propertyPath: m_text
+      value: 'Yes
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 79491649467827215, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
     - {fileID: 3626977836365886679, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
     - {fileID: 8918720889622281255, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
     - {fileID: 1246235952664725822, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+    - {fileID: 4151696781828631513, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
