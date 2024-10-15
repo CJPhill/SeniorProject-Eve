@@ -8,6 +8,7 @@ public class LightingManager : MonoBehaviour
     [Header("Lighting Settings")]
     [SerializeField] private Light DirectionalLight;
     [SerializeField] private LightingPreset Preset;
+    public bool timeStopped = false;
 
     [SerializeField, Range(0, 24)] public float TimeOfDay;
 
@@ -15,7 +16,7 @@ public class LightingManager : MonoBehaviour
         if (Preset == null)
             return;
 
-        if (Application.isPlaying)
+        if (Application.isPlaying && !timeStopped)
         {
             TimeOfDay += Time.deltaTime;
             TimeOfDay %= 24;

@@ -6,7 +6,6 @@ public class PlantGrowth : MonoBehaviour
 {
     [Header("Growth Settings")]
     [SerializeField] private List<GameObject> growthStagePrefabs; 
-    [SerializeField] private float growthInterval = 5f; 
     [SerializeField] private Transform plantSpawnPoint; 
     [SerializeField] public LightingManager lightingManager;
     
@@ -59,14 +58,15 @@ public class PlantGrowth : MonoBehaviour
     {
         while (isGrowing && currentStage < instantiatedStages.Count - 1)
         {
-            // float timeOfDay = lightingManager.TimeOfDay;
-
-            yield return new WaitForSeconds(growthInterval); 
-
-            currentStage++;
-            UpdateGrowthStage();
+            if (Mathf.RoundToInt(lightingManager.TimeOfDay) % (currentStage*2+2) == 0)
+            {
+                currentStage++;
+                UpdateGrowthStage();
+            }
+            yield return null;
         }
     }
+
 
     void UpdateGrowthStage()
     {
