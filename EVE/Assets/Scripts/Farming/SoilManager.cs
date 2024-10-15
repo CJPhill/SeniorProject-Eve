@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class PlantGrowth : MonoBehaviour
 {
@@ -19,7 +18,6 @@ public class PlantGrowth : MonoBehaviour
     private InventoryItem holding = null;
     //private bool soilHoed = false;
     public InventoryManager inventoryManager;
-    public string planted = null;
 
     void Start()
     {
@@ -38,6 +36,7 @@ public class PlantGrowth : MonoBehaviour
 
     void OnMouseDown()
     {
+        holding = inventoryManager.ItemHeld();
         if (isHarvested)
         {
             
@@ -46,6 +45,7 @@ public class PlantGrowth : MonoBehaviour
 
         if (!isGrowing)
         {
+            
             if (holding != null && holding.gameObject.GetComponent<Image>().sprite.name == "Seed")
             {
                 if (instantiatedStages.Count > 0)
@@ -57,9 +57,9 @@ public class PlantGrowth : MonoBehaviour
             }
             else
             {
-                Debug.Log("You must plant a seed!");
+                Debug.Log(holding.gameObject.GetComponent<Image>().sprite.name);
             }
-
+            
         }
 
 
@@ -125,7 +125,6 @@ public class PlantGrowth : MonoBehaviour
             isGrowing = false;
             instantiatedStages[currentStage].SetActive(false);
             isHarvested = true;
-            GetDrop(planted);
         }
 
         else
@@ -135,15 +134,6 @@ public class PlantGrowth : MonoBehaviour
         
     }
 
-
-    public void GetDrop(string seed)
-    {
-
-        //Item receivedItem = inventoryManager.GetSelectedItem(false);
-        //GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
-        //InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
-        //inventoryItem.InitialiseItem(item);
-    }
     void ResetPlant()
     {
         currentStage = 0;
