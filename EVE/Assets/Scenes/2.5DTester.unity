@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.5748165, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1711,6 +1711,18 @@ PrefabInstance:
       propertyPath: lightingManager
       value: 
       objectReference: {fileID: 1964069042}
+    - target: {fileID: 2413043539642871763, guid: 86e3369fe3ca24f92b981c0106b79f55, type: 3}
+      propertyPath: inventoryManager
+      value: 
+      objectReference: {fileID: 176616195}
+    - target: {fileID: 2413043539642871763, guid: 86e3369fe3ca24f92b981c0106b79f55, type: 3}
+      propertyPath: seedInSoil.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413043539642871763, guid: 86e3369fe3ca24f92b981c0106b79f55, type: 3}
+      propertyPath: seedInSoil.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a2afc528f01ab4970adb98ec0950df37, type: 2}
     - target: {fileID: 4143062901787193233, guid: 86e3369fe3ca24f92b981c0106b79f55, type: 3}
       propertyPath: m_RootOrder
       value: 4
