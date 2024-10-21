@@ -35,7 +35,7 @@ public class ConsoleManager : MonoBehaviour
     }
 
     private void ProcessCommand(string input)
-    {
+    {  
         if (string.IsNullOrWhiteSpace(input)) return;
 
         // Display the entered command on the console.
