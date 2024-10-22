@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Properties;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -45,6 +46,8 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// ITEMS RELATED to UI/Keys
     /// </summary>
+    /// 
+
     private void checkMenu()
     {
         if (UserInput.instance.MenuOpenClose)
@@ -86,5 +89,41 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Scripts dealing with collision/Interaction
+    /// </summary>
     
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Interactable"))
+        {
+            //Show Prompt to Interact
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Interactable"))
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                // Check if the collided object has a component that implements IInteractable
+                IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
+                if (interactable != null)
+                {
+                    interactable.receiveInteract();
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Interactable"))
+        {
+            //Hid Prompt to Interact
+        }
+    }
+
+
 }
