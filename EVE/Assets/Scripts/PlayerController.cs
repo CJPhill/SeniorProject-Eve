@@ -18,15 +18,15 @@ public class PlayerController : MonoBehaviour
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
 
-
-
     public LayerMask terrainLayer;
     public Rigidbody rb;
     public SpriteRenderer rbSprite;
 
     public bool menuActive = false;
+    public bool inventoryActive = false;
 
     [SerializeField] private GameObject menu = null;
+    [SerializeField] private GameObject inventory = null;
 
     private void Start()
     {
@@ -36,7 +36,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         
-        checkESC();
+        checkMenu();
+        checkInventory();
         movePlayer();
 
     }
@@ -44,29 +45,35 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// ITEMS RELATED to UI/Keys
     /// </summary>
-    private void checkESC()
+    private void checkMenu()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (UserInput.instance.MenuOpenClose)
         {
             menuActive = !menuActive;
             menu.SetActive(menuActive);
         }
     }
+
+    private void checkInventory(){
+        if (UserInput.instance.InventoryOpenClose)
+        {
+            inventoryActive = !inventoryActive;
+            inventory.SetActive(inventoryActive);
+        }
+    }
+
     
     /// <summary>
     /// Movement related code
     /// </summary>
     private void movePlayer()
     {
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
+        moveInput.x = UserInput.instance.MoveInput.x;
+        moveInput.y = UserInput.instance.MoveInput.y;
         moveInput.Normalize();
 
         rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed);
         
-
-        
-
 
         //Sprite Flipping
         if (moveInput.x != 0 && moveInput.x < 0)
