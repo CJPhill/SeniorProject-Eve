@@ -12,7 +12,7 @@ public class UserInput : MonoBehaviour
     public bool MenuOpenClose { get; private set; }
     public bool InventoryOpenClose { get; private set; }
 
-
+    
     private PlayerInput _playerInput;
 
     private InputAction _moveAction;
