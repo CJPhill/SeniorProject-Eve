@@ -585,8 +585,8 @@ MonoBehaviour:
   m_Action: {fileID: 0}
   m_BindingId: 
   m_DisplayStringOptions: 0
-  m_ActionLabel: {fileID: 0}
-  m_BindingText: {fileID: 0}
+  m_ActionLabel: {fileID: 4298243427816478966}
+  m_BindingText: {fileID: 6793568536474594188}
   m_RebindOverlay: {fileID: 0}
   m_RebindText: {fileID: 0}
   m_UpdateBindingUIEvent:
