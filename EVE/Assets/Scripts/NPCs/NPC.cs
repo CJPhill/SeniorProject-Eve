@@ -19,8 +19,7 @@ public abstract class NPC : MonoBehaviour, IInteractable
     // Update is called once per frame
     private void Update()
     {
-        //restructure to take UserInput variables from UserInput.cs
-        if(Keyboard.current.tKey.wasPressedThisFrame && isPlayerInRange())
+        if(UserInput.instance.Interact && isPlayerInRange())
         {
             receiveInteract();
         }

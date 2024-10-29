@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
         checkMenu();
         checkInventory();
         movePlayer();
-        checkTalk();
     }
 
     /// <summary>
@@ -63,15 +62,6 @@ public class PlayerController : MonoBehaviour
             inventory.SetActive(inventoryActive);
         }
     }
-
-    private void checkTalk(){
-        if (UserInput.instance.Talk)
-        {
-            //Check if there is an NPC in front of the player
-            //If there is, start conversation
-        }
-    }
-
     
     /// <summary>
     /// Movement related code

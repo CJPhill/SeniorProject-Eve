@@ -11,7 +11,6 @@ public class UserInput : MonoBehaviour
     public bool Interact { get; private set; }
     public bool MenuOpenClose { get; private set; }
     public bool InventoryOpenClose { get; private set; }
-    public bool Talk { get; private set; }
 
     
     private PlayerInput _playerInput;
@@ -20,7 +19,6 @@ public class UserInput : MonoBehaviour
     private InputAction _interactAction;
     private InputAction _menuOpenCloseAction;
     private InputAction _inventoryOpenCloseAction;
-    private InputAction _talkAction;
 
     private void Awake(){
         if(instance == null){ 
@@ -41,7 +39,6 @@ public class UserInput : MonoBehaviour
         _interactAction = _playerInput.actions["Interact"];
         _menuOpenCloseAction = _playerInput.actions["MenuOpenClose"];
         _inventoryOpenCloseAction = _playerInput.actions["InventoryOpenClose"];
-        _talkAction = _playerInput.actions["Talk"];
     }
 
     private void UpdateInput(){
@@ -49,6 +46,5 @@ public class UserInput : MonoBehaviour
         Interact = _interactAction.WasPressedThisFrame();
         MenuOpenClose = _menuOpenCloseAction.WasPressedThisFrame();
         InventoryOpenClose = _inventoryOpenCloseAction.WasPressedThisFrame();
-        Talk = _talkAction.WasPressedThisFrame();
     }
 }
