@@ -10,6 +10,8 @@ public abstract class NPC : MonoBehaviour, IInteractable
     private const float INTERACT_RADIUS = 5f;
 
     private Transform _playerTransform;
+    public bool interacting = false;
+    
 
     private void Start()
     {

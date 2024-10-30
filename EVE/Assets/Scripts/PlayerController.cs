@@ -38,7 +38,9 @@ public class PlayerController : MonoBehaviour
     {
         checkMenu();
         checkInventory();
-        movePlayer();
+        if(!DialogController.talking){
+            movePlayer();
+        }
     }
 
     /// <summary>
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour
         if (UserInput.instance.MenuOpenClose)
         {
             menuActive = !menuActive;
+            Debug.Log("Menu Active: " + menuActive);
             menu.SetActive(menuActive);
         }
     }

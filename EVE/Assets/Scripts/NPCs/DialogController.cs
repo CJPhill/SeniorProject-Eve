@@ -9,11 +9,13 @@ public class DialogController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI NPCName;
     [SerializeField] private TextMeshProUGUI NPCDialogue;
     [SerializeField] private float typingSpeed = 10f;
+    [SerializeField] private Canvas dialogueCanvas;
 
     private Queue<string> dialogueLines = new Queue<string>();
 
     private bool conversationEnded;
     private bool isTyping;
+    public static bool talking;
 
     private string d;
 
@@ -27,10 +29,12 @@ public class DialogController : MonoBehaviour
             if(!conversationEnded){
                 //start conversation
                 StartConversation(dialogueText);
+                talking = true;
             }
             else if(conversationEnded && !isTyping){
                 //end conversation
                 EndConversation();
+                talking = false;
                 return;
             }
         }
@@ -53,8 +57,8 @@ public class DialogController : MonoBehaviour
     }
 
     private void StartConversation(DialogueText dialogueText){
-        if(!gameObject.activeSelf){
-            gameObject.SetActive(true);
+        if(!dialogueCanvas.gameObject.activeSelf){
+            dialogueCanvas.gameObject.SetActive(true);
         }
 
         NPCName.text = dialogueText.speakerName;
@@ -66,8 +70,8 @@ public class DialogController : MonoBehaviour
     }
 
     private void EndConversation(){
-        if(gameObject.activeSelf){
-            gameObject.SetActive(false);
+        if(dialogueCanvas.gameObject.activeSelf){
+            dialogueCanvas.gameObject.SetActive(false);
         }
         conversationEnded = true;
     }
@@ -80,8 +84,7 @@ public class DialogController : MonoBehaviour
         isTyping = false;
     }
 
-    private IEnumerator TypeDialogueText(string d)
-    {
+    private IEnumerator TypeDialogueText(string d){
         isTyping = true;
 
         int maxVisibleChars = 0;
@@ -89,9 +92,7 @@ public class DialogController : MonoBehaviour
         NPCDialogue.text = d;
         NPCDialogue.maxVisibleCharacters = maxVisibleChars;        
 
-        foreach (char c in d.ToCharArray())
-        {
-
+        foreach (char c in d.ToCharArray()){
             maxVisibleChars++;
             NPCDialogue.maxVisibleCharacters = maxVisibleChars;
 
@@ -100,6 +101,4 @@ public class DialogController : MonoBehaviour
 
         isTyping = false;
     }
-
-
 }

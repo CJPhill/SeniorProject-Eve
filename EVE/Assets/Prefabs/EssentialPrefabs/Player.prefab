@@ -59,7 +59,7 @@ MonoBehaviour:
   rbSprite: {fileID: 5511953161549159560}
   menuActive: 0
   inventoryActive: 0
-  menu: {fileID: 7421135036579069730, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
+  menu: {fileID: 0}
   inventory: {fileID: 0}
 --- !u!54 &7316207434196314824
 Rigidbody:

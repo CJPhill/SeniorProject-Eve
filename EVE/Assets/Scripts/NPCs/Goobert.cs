@@ -6,6 +6,7 @@ public class Goobert : NPC, ITalkable
 {
     [SerializeField] private DialogueText dialogueText;
     [SerializeField] private DialogController dialogController;
+    
 
     private bool dialogueActive;
 
@@ -15,7 +16,7 @@ public class Goobert : NPC, ITalkable
     }
 
     public void Talk(DialogueText dialogueText)
-    {
+    {            
         dialogController.gameObject.SetActive(!dialogueActive);
         dialogController.DisplayNextDialog(dialogueText);
     }
