@@ -1,0 +1,34 @@
+
+
+HW 2 - Piloni & Miles Textbook
+CMSI 4071 Fall 2024
+
+Category        Weight     Earned
+===========    ========    ======
+Problem 1      [3 pts.]      3.0
+Problem 2      [4 pts.]      4.0
+Problem 3      [6 pts.]      6.0
+Problem 4      [9 pts.]      9.0
+Problem 5      [2 pts.]      2.0
+Problem 6      [7 pts.]      7.0
+Problem 7      [1 pt.]       1.0
+Problem 8      [3 pts.]      3.0
+Problem 9      [5 pts.]      5.0
+Problem 10     [4 pts.]      4.0
+
+      Subtotal [44 max]     44.0
+             Your Total     44.0
+
+         Letter grade   A-plus
+======================================
+COMMENTS:
+
+good analysis on problem 5 as far as user stories, but the statement in the
+question is actually about the user story ESTIMATE, not necessarily about
+the story itself.  If the estimate is wrong, the story could actually be a
+small one and the team needs more discussion about WHY the estimate is too
+large.  Either way, though, your argument holds true.
+
+good, thoughful answers to all these questions!
+
+nice work!
