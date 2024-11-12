@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class ConsoleManager : MonoBehaviour
 {
@@ -62,6 +63,9 @@ public class ConsoleManager : MonoBehaviour
                 return "Console cleared.";
             case "hello":
                 return "Hello, user!";
+            case "quit":
+                StartCoroutine(quitFunction());
+                return "Closing terminal";
             case "mail":
                 return DisplayMailList();
             default:
@@ -100,6 +104,13 @@ public class ConsoleManager : MonoBehaviour
         }
 
         return result + "Use 'read mail <number>' to read a specific message.";
+    }
+
+    IEnumerator quitFunction()
+    {
+        yield return new WaitForSeconds(5);
+        this.transform.parent.gameObject.SetActive(false);
+        ClearConsole();
     }
 
     private string ReadMail(int index)

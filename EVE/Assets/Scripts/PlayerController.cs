@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Properties;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Movement")]
     private Vector2 moveInput;
+    private bool playerCanMove;
 
 
     [Header("Slope Handling")]
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerCanMove = true;
     }
 
     private void Update()
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
         if(!DialogController.talking){
             movePlayer();
         }
+        typingCheck();
     }
 
     /// <summary>
@@ -71,27 +75,54 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void movePlayer()
     {
-        moveInput.x = UserInput.instance.MoveInput.x;
-        moveInput.y = UserInput.instance.MoveInput.y;
-        moveInput.Normalize();
-
-        rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed);
-        
-
-        //Sprite Flipping
-        if (moveInput.x != 0 && moveInput.x < 0)
+        if (playerCanMove)
         {
-            rbSprite.flipX = true;
-        } 
-        else if (moveInput.x != 0 && moveInput.x > 0)
-        {
-            rbSprite.flipX = false;
+            moveInput.x = UserInput.instance.MoveInput.x;
+            moveInput.y = UserInput.instance.MoveInput.y;
+            moveInput.Normalize();
+
+            rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed);
+
+
+            //Sprite Flipping
+            if (moveInput.x != 0 && moveInput.x < 0)
+            {
+                rbSprite.flipX = true;
+            }
+            else if (moveInput.x != 0 && moveInput.x > 0)
+            {
+                rbSprite.flipX = false;
+            }
         }
+        
     }
 
     /// <summary>
     /// Scripts dealing with collision/Interaction
     /// </summary>
+    /// 
+
+    private void typingCheck()
+    {
+        if (GameObject.FindWithTag("Computer") != null)
+        {
+            GameObject computer = GameObject.FindWithTag("Computer");
+            Debug.Log("Object with tag exists in the scene.");
+            if (computer.activeInHierarchy)
+            {
+                playerCanMove = false;
+            }
+            else
+            {
+                playerCanMove = true;
+            }
+        }
+        else
+        {
+            Debug.Log("Object with tag does not exist in the scene.");
+            playerCanMove = true;
+        }
+    }
     
     private void OnCollisionEnter(Collision collision)
     {
@@ -103,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+
         if (collision.gameObject.CompareTag("Interactable"))
         {
             if (Input.GetKeyDown(KeyCode.E))
