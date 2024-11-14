@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         if(!DialogController.talking){
             movePlayer();
         }
-        typingCheck();
+        // typingCheck();
     }
 
     /// <summary>

@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 7303653632923737347}
   - component: {fileID: 8987152450642225977}
   m_Layer: 0
-  m_Name: Soil
+  m_Name: SoilTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
