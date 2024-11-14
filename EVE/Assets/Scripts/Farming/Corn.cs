@@ -2,33 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Corn : Plant, IFarmable
+public class Corn : Plant, IInteractable
 {
     [SerializeField] public List<GameObject> growthStagePrefabs; 
 
     public GrowthController GrowthController;
     public int growthRate = 2;
 
+    public bool readyToGrow = true;
+    public bool readyToHarvest = false;
+
+    public void Start()
+    {
+        readyToGrow = true;
+        // Debug.Log(readyToGrow);
+    }
+
     public override void receiveInteract()
     {
-        if(GrowthController.readyToHarvest)
+        if(!readyToHarvest)
         {
-            Farm();
-            GrowthController.readyToHarvest = false;
-            GrowthController.readyToGrow = true;
-            Debug.Log("Harvesting Corn");
+            readyToGrow = true;
         }
 
-        else if(GrowthController.readyToGrow)
+        if(readyToHarvest)
         {
-            GrowthController.readyToGrow = false;
+            Farm();
+            readyToHarvest = false;
+            readyToGrow = true;
+            Debug.Log("Harvesting Corn");
+        }
+        else if(readyToGrow)
+        {
+            Debug.Log("Planting Corn");
+            
             Grow();
         }
     }
 
     public void Grow()
     {
-        GrowthController.readyToGrow = false;
+        readyToGrow = false;
         StartCoroutine(GrowthController.GrowPlant(growthStagePrefabs, growthRate));
         Debug.Log("Growing Corn");
     }

@@ -123,5 +123,7 @@ MonoBehaviour:
   - {fileID: 1470603941087077482, guid: ae9b751f71d9b4507b9bc7697d9f6655, type: 3}
   - {fileID: 2112290481904292856, guid: 98f7477151d534a0faf44bac273488d4, type: 3}
   - {fileID: 8126193415987881233, guid: 6597a0be457ae42d8a2d4a1aca61a184, type: 3}
-  GrowthController: {fileID: 0}
+  GrowthController: {fileID: 7418871477808757711, guid: 00520da167e7b4c67b08abb68de903f6, type: 3}
   growthRate: 2
+  readyToGrow: 0
+  readyToHarvest: 0

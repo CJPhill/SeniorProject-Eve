@@ -9,20 +9,10 @@ public abstract class Plant : MonoBehaviour, IInteractable
 
     private Transform _playerTransform;
     public bool interacting = false;
-    
 
     private void Start()
     {
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        if(UserInput.instance.Interact && isPlayerInRange())
-        {
-            receiveInteract();
-        }
     }
 
     public abstract void receiveInteract();

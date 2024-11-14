@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Soil : MonoBehaviour, IInteractable
 {
@@ -13,12 +14,14 @@ public class Soil : MonoBehaviour, IInteractable
     private InventoryItem holding = null;
     private GameObject cropPrefab;
 
+    public bool planted = false;
+
     private void Start() {
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update() {
-        if (UserInput.instance.Interact && isPlayerInRange())
+        if (UserInput.instance.Interact && isPlayerInRange() && !planted)
         {   
             receiveInteract();
         }
@@ -26,27 +29,23 @@ public class Soil : MonoBehaviour, IInteractable
 
     public void receiveInteract() {
         holding = inventoryManager.ItemHeld();
+        
+        cropPrefab = Resources.Load<GameObject>($"{holding.gameObject.GetComponent<Image>().sprite.name}");
 
-        // Debug.Log($"{holding.item.name}");
-
-        if (holding != null) {
-            //  && holding.item.type == ItemType.BuildingBlock
-            // cropPrefab = Resources.Load<GameObject>($"{holding.gameObject.name}");
-            cropPrefab = Resources.Load<GameObject>("Corn");
-
-            // if (cropPrefab == null) {
-            //     Debug.LogError($"{holding.gameObject.name} prefab not found in Resources folder.");
-            // }
-            // else {
-                GameObject newCrop = Instantiate(cropPrefab, transform.position, Quaternion.identity);
-
-                Plant plantComponent = newCrop.GetComponent<Plant>();
-                if (plantComponent != null) {
-                    plantComponent.receiveInteract(); 
-                }
-            // }
+        if (cropPrefab == null) {
+            Debug.LogError($"{holding.gameObject.GetComponent<Image>().sprite.name} prefab not found in Resources folder.");
         }
-        Debug.Log("help");
+
+        if (holding != null && !planted) {
+            //  && holding.item.type == ItemType.BuildingBlock
+            GameObject newCrop = Instantiate(cropPrefab, transform.position, Quaternion.identity);
+            
+            IInteractable interactableCrop = newCrop.GetComponent<IInteractable>();
+            if (interactableCrop != null) {
+                planted = true;
+                interactableCrop.receiveInteract(); 
+            }
+        }
     }
 
     private bool isPlayerInRange() {
