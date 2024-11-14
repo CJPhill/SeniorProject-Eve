@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Movement")]
     private Vector2 moveInput;
+    private Transform cameraTransform;
     private bool playerCanMove;
 
 
@@ -35,6 +36,11 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerCanMove = true;
+        cameraTransform = Camera.main.transform;
+        rb = GetComponent<Rigidbody>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -43,6 +49,7 @@ public class PlayerController : MonoBehaviour
         checkInventory();
         if(!DialogController.talking){
             movePlayer();
+            FaceCamera();
         }
         // typingCheck();
     }
@@ -69,33 +76,48 @@ public class PlayerController : MonoBehaviour
             inventory.SetActive(inventoryActive);
         }
     }
-    
+    private void FaceCamera()
+    {
+        // Get the direction from the sprite to the camera
+        Vector3 directionToCamera = cameraTransform.position - rbSprite.transform.position;
+
+        // Set the y-component to zero to keep the rotation on the horizontal plane
+        directionToCamera.y = 0;
+
+        // Rotate the sprite to face the camera
+        if (directionToCamera != Vector3.zero)
+        {
+            rbSprite.transform.rotation = Quaternion.LookRotation(directionToCamera);
+        }
+    }
+
+
     /// <summary>
     /// Movement related code
     /// </summary>
     private void movePlayer()
+
     {
         if (playerCanMove)
         {
+            // Get movement input
             moveInput.x = UserInput.instance.MoveInput.x;
             moveInput.y = UserInput.instance.MoveInput.y;
             moveInput.Normalize();
 
-            rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed);
+            // Calculate movement relative to the camera's facing direction
+            Vector3 moveDirection = cameraTransform.forward * moveInput.y + cameraTransform.right * moveInput.x;
+            moveDirection.y = 0; // Keep movement horizontal
 
+            // Apply velocity based on moveDirection
+            rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
 
-            //Sprite Flipping
-            if (moveInput.x != 0 && moveInput.x < 0)
-            {
-                rbSprite.flipX = true;
-            }
-            else if (moveInput.x != 0 && moveInput.x > 0)
-            {
-                rbSprite.flipX = false;
-            }
+            // Sprite flipping based on input direction
+            if (moveInput.x < 0) rbSprite.flipX = true;
+            else if (moveInput.x > 0) rbSprite.flipX = false;
         }
-        
     }
+
 
     /// <summary>
     /// Scripts dealing with collision/Interaction
