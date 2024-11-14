@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Computer
+  - GrowthController
   layers:
   - Default
   - TransparentFX

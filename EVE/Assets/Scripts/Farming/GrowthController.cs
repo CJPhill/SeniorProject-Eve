@@ -5,10 +5,11 @@ using UnityEngine;
 public class GrowthController : MonoBehaviour
 {
     [SerializeField] public LightingManager lightingManager;
+    private List<GameObject> instantiatedStages = new List<GameObject>(); 
 
     private int currentStage = 0;
 
-    void UpdateGrowthStage(List<GameObject> growthStagePrefabs)
+    void UpdateGrowthStage()
     {
         foreach (GameObject stage in growthStagePrefabs)
         {
@@ -17,25 +18,37 @@ public class GrowthController : MonoBehaviour
 
         if (currentStage < growthStagePrefabs.Count)
         {
-            growthStagePrefabs[currentStage].SetActive(true);
-            Debug.Log(currentStage);
+            instantiatedStages[currentStage].SetActive(true);
+            Debug.Log("stage" + currentStage);
+        }
+    }
+
+    void InitializeStages(List<GameObject> growthStagePrefabs)
+    {
+        foreach (GameObject prefab in growthStagePrefabs)
+        {
+            GameObject stageInstance = Instantiate(prefab, plantSpawnPoint.position, Quaternion.identity);
+            stageInstance.SetActive(false); 
+            instantiatedStages.Add(stageInstance);
         }
     }
 
     public IEnumerator GrowPlant(List<GameObject> growthStagePrefabs, int growthRate)
     {
         float elapsedTime = 0;
-        Debug.Log(currentStage);
+        currentStage = 0;
+        InitializeStages(growthStagePrefabs);
 
         // if (Mathf.RoundToInt(lightingManager.TimeOfDay) % (growthRate*2+2) == 0)
 
         while (currentStage < growthStagePrefabs.Count) {
-            Debug.Log(elapsedTime);
+            elapsedTime += Time.deltaTime;
 
+            
             if (elapsedTime >= growthRate) {
                 elapsedTime = 0f; 
                 currentStage++; 
-                UpdateGrowthStage(growthStagePrefabs);
+                UpdateGrowthStage();
             }
 
             yield return null;
