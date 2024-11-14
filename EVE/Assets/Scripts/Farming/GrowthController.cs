@@ -11,33 +11,33 @@ public class GrowthController : MonoBehaviour
 
     void UpdateGrowthStage()
     {
-        foreach (GameObject stage in growthStagePrefabs)
+        foreach (GameObject stage in instantiatedStages)
         {
             stage.SetActive(false);
         }
 
-        if (currentStage < growthStagePrefabs.Count)
+        if (currentStage < instantiatedStages.Count)
         {
             instantiatedStages[currentStage].SetActive(true);
             Debug.Log("stage" + currentStage);
         }
     }
 
-    void InitializeStages(List<GameObject> growthStagePrefabs)
-    {
-        foreach (GameObject prefab in growthStagePrefabs)
-        {
-            GameObject stageInstance = Instantiate(prefab, plantSpawnPoint.position, Quaternion.identity);
-            stageInstance.SetActive(false); 
-            instantiatedStages.Add(stageInstance);
-        }
-    }
+    // void InitializeStages(List<GameObject> growthStagePrefabs)
+    // {
+    //     foreach (GameObject prefab in growthStagePrefabs)
+    //     {
+    //         GameObject stageInstance = Instantiate(prefab, plantSpawnPoint.position, Quaternion.identity);
+    //         stageInstance.SetActive(false); 
+    //         instantiatedStages.Add(stageInstance);
+    //     }
+    // }
 
     public IEnumerator GrowPlant(List<GameObject> growthStagePrefabs, int growthRate)
     {
         float elapsedTime = 0;
         currentStage = 0;
-        InitializeStages(growthStagePrefabs);
+        // InitializeStages(growthStagePrefabs);
 
         // if (Mathf.RoundToInt(lightingManager.TimeOfDay) % (growthRate*2+2) == 0)
 
