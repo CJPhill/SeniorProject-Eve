@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [Header("Player Movement")]
     private Vector2 moveInput;
     private bool playerCanMove;
-
+    private Animator animator;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
@@ -34,7 +34,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         playerCanMove = true;
+
     }
 
     private void Update()
@@ -44,7 +46,7 @@ public class PlayerController : MonoBehaviour
         if(!DialogController.talking){
             movePlayer();
         }
-        // typingCheck();
+        typingCheck();
     }
 
     /// <summary>
@@ -83,6 +85,11 @@ public class PlayerController : MonoBehaviour
 
             rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed);
 
+            // Calculate movement magnitude
+            float movementMagnitude = moveInput.magnitude;
+
+            // Set Animator parameter for blend tree
+            animator.SetFloat("xVelocity", movementMagnitude * moveSpeed);
 
             //Sprite Flipping
             if (moveInput.x != 0 && moveInput.x < 0)
@@ -111,16 +118,13 @@ public class PlayerController : MonoBehaviour
             if (computer.activeInHierarchy)
             {
                 playerCanMove = false;
+                Debug.Log("Can not move");
             }
             else
             {
                 playerCanMove = true;
+                Debug.Log("Can move");
             }
-        }
-        else
-        {
-            Debug.Log("Object with tag does not exist in the scene.");
-            playerCanMove = true;
         }
     }
     
@@ -139,6 +143,12 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                // Trigger the interact animation
+                animator.SetBool("isInteracting", true);
+
+                // Optionally, reset the animation after a short delay
+                StartCoroutine(ResetInteractAnimation());
+
                 // Check if the collided object has a component that implements IInteractable
                 IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
                 if (interactable != null)
@@ -147,6 +157,12 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator ResetInteractAnimation()
+    {
+        yield return new WaitForSeconds(1.0f); // Adjust the duration to match your animation length
+        animator.SetBool("isInteracting", false);
     }
 
     private void OnCollisionExit(Collision collision)
