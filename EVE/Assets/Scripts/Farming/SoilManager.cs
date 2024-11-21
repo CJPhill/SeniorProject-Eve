@@ -79,7 +79,7 @@ public class PlantGrowth : MonoBehaviour
 
     public void UseSelectedItem()
     {
-        Item receivedItem = inventoryManager.GetSelectedItem(true);
+        Item receivedItem = inventoryManager.GetSelectedItem();
         if (receivedItem != null)
         {
             Debug.Log("Used item: " + receivedItem);

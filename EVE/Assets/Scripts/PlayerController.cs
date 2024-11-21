@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
     /// Movement related code
     /// </summary>
     private void movePlayer()
-
     {
         if (playerCanMove)
         {

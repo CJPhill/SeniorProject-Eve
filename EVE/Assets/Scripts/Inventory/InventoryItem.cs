@@ -11,8 +11,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Image image;
     public Text countText;
 
-    [HideInInspector] public Item item;
-    [HideInInspector] public int count = 1;
+    public Item item;
+    public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
 
     public void InitialiseItem(Item newItem) {

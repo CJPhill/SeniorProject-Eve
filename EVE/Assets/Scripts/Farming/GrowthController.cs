@@ -7,6 +7,8 @@ public class GrowthController : MonoBehaviour
     [SerializeField] public LightingManager lightingManager;
     private List<GameObject> instantiatedStages = new List<GameObject>(); 
 
+    private Vector3 plantSpawnPoint;
+
     private int currentStage = 0;
 
     void UpdateGrowthStage()
@@ -19,26 +21,35 @@ public class GrowthController : MonoBehaviour
         if (currentStage < instantiatedStages.Count)
         {
             instantiatedStages[currentStage].SetActive(true);
-            Debug.Log("stage" + currentStage);
         }
     }
 
-    // void InitializeStages(List<GameObject> growthStagePrefabs)
-    // {
-    //     foreach (GameObject prefab in growthStagePrefabs)
-    //     {
-    //         GameObject stageInstance = Instantiate(prefab, plantSpawnPoint.position, Quaternion.identity);
-    //         stageInstance.SetActive(false); 
-    //         instantiatedStages.Add(stageInstance);
-    //     }
-    // }
-
-    public IEnumerator GrowPlant(List<GameObject> growthStagePrefabs, int growthRate)
+    void InitializeStages(List<GameObject> growthStagePrefabs)
     {
+        foreach (GameObject stage in instantiatedStages)
+        {
+            Destroy(stage);
+        }
+        instantiatedStages.Clear();
+
+        foreach (GameObject prefab in growthStagePrefabs)
+        {
+            GameObject stageInstance = Instantiate(prefab, plantSpawnPoint, Quaternion.identity);
+            stageInstance.SetActive(false); 
+            instantiatedStages.Add(stageInstance);
+        }
+    }
+
+    public IEnumerator GrowPlant(List<GameObject> growthStagePrefabs, int growthRate, Vector3 newSpawnPoint, System.Action onGrowthComplete)
+    {
+        plantSpawnPoint = newSpawnPoint;
+
+        InitializeStages(growthStagePrefabs);
+
         float elapsedTime = 0;
         currentStage = 0;
-        // InitializeStages(growthStagePrefabs);
 
+        plantSpawnPoint = newSpawnPoint;
         // if (Mathf.RoundToInt(lightingManager.TimeOfDay) % (growthRate*2+2) == 0)
 
         while (currentStage < growthStagePrefabs.Count) {
@@ -53,6 +64,8 @@ public class GrowthController : MonoBehaviour
 
             yield return null;
         }
+
+        onGrowthComplete?.Invoke();
     }
 
 }

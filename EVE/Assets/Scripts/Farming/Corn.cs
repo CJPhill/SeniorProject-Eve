@@ -15,7 +15,6 @@ public class Corn : Plant, IInteractable
     public void Start()
     {
         readyToGrow = true;
-        // Debug.Log(readyToGrow);
     }
 
     public override void receiveInteract()
@@ -27,15 +26,11 @@ public class Corn : Plant, IInteractable
 
         if(readyToHarvest)
         {
-            Farm();
-            readyToHarvest = false;
-            readyToGrow = true;
             Debug.Log("Harvesting Corn");
+            Farm();
         }
         else if(readyToGrow)
         {
-            Debug.Log("Planting Corn");
-            
             Grow();
         }
     }
@@ -43,11 +38,17 @@ public class Corn : Plant, IInteractable
     public void Grow()
     {
         readyToGrow = false;
-        StartCoroutine(GrowthController.GrowPlant(growthStagePrefabs, growthRate));
-        Debug.Log("Growing Corn");
+        StartCoroutine(GrowthController.GrowPlant(growthStagePrefabs, growthRate, transform.position, onGrowthComplete));
     }
 
     public void Farm(){
+        readyToHarvest = false;
+        readyToGrow = true;
         Debug.Log("Farming Corn");
+    }
+
+    private void onGrowthComplete()
+    {
+        readyToHarvest = true;
     }
 }
