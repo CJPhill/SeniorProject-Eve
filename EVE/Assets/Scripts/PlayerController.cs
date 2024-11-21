@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Transform cameraTransform;
     private bool playerCanMove;
-
+    private Animator animator;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
@@ -35,12 +35,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         playerCanMove = true;
-        cameraTransform = Camera.main.transform;
-        rb = GetComponent<Rigidbody>();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void Update()
@@ -51,7 +48,7 @@ public class PlayerController : MonoBehaviour
             movePlayer();
             FaceCamera();
         }
-        // typingCheck();
+        typingCheck();
     }
 
     /// <summary>
@@ -105,19 +102,26 @@ public class PlayerController : MonoBehaviour
             moveInput.y = UserInput.instance.MoveInput.y;
             moveInput.Normalize();
 
-            // Calculate movement relative to the camera's facing direction
-            Vector3 moveDirection = cameraTransform.forward * moveInput.y + cameraTransform.right * moveInput.x;
-            moveDirection.y = 0; // Keep movement horizontal
+            rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed);
 
-            // Apply velocity based on moveDirection
-            rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+            // Calculate movement magnitude
+            float movementMagnitude = moveInput.magnitude;
 
-            // Sprite flipping based on input direction
-            if (moveInput.x < 0) rbSprite.flipX = true;
-            else if (moveInput.x > 0) rbSprite.flipX = false;
+            // Set Animator parameter for blend tree
+            animator.SetFloat("xVelocity", movementMagnitude * moveSpeed);
+
+            //Sprite Flipping
+            if (moveInput.x != 0 && moveInput.x < 0)
+            {
+                rbSprite.flipX = true;
+            }
+            else if (moveInput.x != 0 && moveInput.x > 0)
+            {
+                rbSprite.flipX = false;
+            }
         }
+        
     }
-
 
     /// <summary>
     /// Scripts dealing with collision/Interaction
@@ -133,16 +137,13 @@ public class PlayerController : MonoBehaviour
             if (computer.activeInHierarchy)
             {
                 playerCanMove = false;
+                Debug.Log("Can not move");
             }
             else
             {
                 playerCanMove = true;
+                Debug.Log("Can move");
             }
-        }
-        else
-        {
-            Debug.Log("Object with tag does not exist in the scene.");
-            playerCanMove = true;
         }
     }
     
@@ -161,6 +162,12 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                // Trigger the interact animation
+                animator.SetBool("isInteracting", true);
+
+                // Optionally, reset the animation after a short delay
+                StartCoroutine(ResetInteractAnimation());
+
                 // Check if the collided object has a component that implements IInteractable
                 IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
                 if (interactable != null)
@@ -169,6 +176,12 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator ResetInteractAnimation()
+    {
+        yield return new WaitForSeconds(1.0f); // Adjust the duration to match your animation length
+        animator.SetBool("isInteracting", false);
     }
 
     private void OnCollisionExit(Collision collision)
