@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 9171466044555047276}
   - component: {fileID: 935834579848115333}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: FinalPlant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4915557286320158096
 Transform:
   m_ObjectHideFlags: 0

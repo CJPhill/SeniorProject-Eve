@@ -5,38 +5,22 @@ using UnityEngine;
 public class GrowthController : MonoBehaviour
 {
     [SerializeField] public LightingManager lightingManager;
-    private List<GameObject> instantiatedStages = new List<GameObject>(); 
 
+    private GameObject currentStageInstance = null;
     private Vector3 plantSpawnPoint;
 
     private int currentStage = 0;
 
-    void UpdateGrowthStage()
+    void UpdateGrowthStage(List<GameObject> growthStagePrefabs)
     {
-        foreach (GameObject stage in instantiatedStages)
+        if (currentStage < growthStagePrefabs.Count - 1 && currentStageInstance != null)
         {
-            stage.SetActive(false);
+            Destroy(currentStageInstance);
         }
 
-        if (currentStage < instantiatedStages.Count)
+        if (currentStage < growthStagePrefabs.Count)
         {
-            instantiatedStages[currentStage].SetActive(true);
-        }
-    }
-
-    void InitializeStages(List<GameObject> growthStagePrefabs)
-    {
-        foreach (GameObject stage in instantiatedStages)
-        {
-            Destroy(stage);
-        }
-        instantiatedStages.Clear();
-
-        foreach (GameObject prefab in growthStagePrefabs)
-        {
-            GameObject stageInstance = Instantiate(prefab, plantSpawnPoint, Quaternion.identity);
-            stageInstance.SetActive(false); 
-            instantiatedStages.Add(stageInstance);
+            currentStageInstance = Instantiate(growthStagePrefabs[currentStage], plantSpawnPoint, Quaternion.identity);
         }
     }
 
@@ -44,22 +28,18 @@ public class GrowthController : MonoBehaviour
     {
         plantSpawnPoint = newSpawnPoint;
 
-        InitializeStages(growthStagePrefabs);
-
         float elapsedTime = 0;
         currentStage = 0;
 
-        plantSpawnPoint = newSpawnPoint;
-        // if (Mathf.RoundToInt(lightingManager.TimeOfDay) % (growthRate*2+2) == 0)
-
-        while (currentStage < growthStagePrefabs.Count) {
+        while (currentStage < growthStagePrefabs.Count)
+        {
             elapsedTime += Time.deltaTime;
 
-            
-            if (elapsedTime >= growthRate) {
-                elapsedTime = 0f; 
-                currentStage++; 
-                UpdateGrowthStage();
+            if (elapsedTime >= growthRate)
+            {
+                elapsedTime = 0f;
+                UpdateGrowthStage(growthStagePrefabs);
+                currentStage++;
             }
 
             yield return null;
@@ -67,5 +47,4 @@ public class GrowthController : MonoBehaviour
 
         onGrowthComplete?.Invoke();
     }
-
 }
