@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [Header("Interaction")]
     private bool playerCanInteract;
     private GameObject interactObject = null;
+    public GameObject interactSprite;
 
 
     public LayerMask terrainLayer;
@@ -191,6 +192,7 @@ public class PlayerController : MonoBehaviour
             //Show Prompt to Interact
             playerCanInteract = true;
             interactObject = collision.gameObject;
+            interactSprite.SetActive(true);
             
             
         }
@@ -203,6 +205,7 @@ public class PlayerController : MonoBehaviour
         {
             playerCanInteract = false;
             interactObject = null;
+            interactSprite.SetActive(false);
         }
     }
 
