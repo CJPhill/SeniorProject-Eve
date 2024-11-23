@@ -435,7 +435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6372928762937078850, guid: a34ee889ad272414d9235bb274c5a5be, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.05718355
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6372928762937078850, guid: a34ee889ad272414d9235bb274c5a5be, type: 3}
       propertyPath: m_LocalRotation.w
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595614393}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7271310d70964e64daca432049489017, type: 3}
   m_Name: 
@@ -1707,7 +1707,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7421135036579069730, guid: f7cae8617930f40ecb160eb8ce3f9ccf, type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4252731082518022434, guid: d42d2e790615f48c1b6603ddab538caf, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8942741003243047037, guid: d42d2e790615f48c1b6603ddab538caf, type: 3}

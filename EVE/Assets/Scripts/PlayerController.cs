@@ -22,6 +22,11 @@ public class PlayerController : MonoBehaviour
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
 
+    [Header("Interaction")]
+    private bool playerCanInteract;
+    private GameObject interactObject = null;
+
+
     public LayerMask terrainLayer;
     public Rigidbody rb;
     public SpriteRenderer rbSprite;
@@ -37,6 +42,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         playerCanMove = true;
+        playerCanInteract = false;
 
     }
 
@@ -46,8 +52,9 @@ public class PlayerController : MonoBehaviour
         checkInventory();
         if(!DialogController.talking){
             movePlayer();
-            FaceCamera();
+            //FaceCamera();
         }
+        interactCheck();
         typingCheck();
     }
 
@@ -141,38 +148,31 @@ public class PlayerController : MonoBehaviour
             else
             {
                 playerCanMove = true;
-                Debug.Log("Can move");
+                
             }
         }
-    }
-    
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Interactable"))
+        else
         {
-            //Show Prompt to Interact
+            playerCanMove = true;
+            Debug.Log("Can move");
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void interactCheck()
     {
-
-        if (collision.gameObject.CompareTag("Interactable"))
+        if (Input.GetKeyDown(KeyCode.E) && playerCanInteract)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            // Trigger the interact animation
+            animator.SetBool("isInteracting", true);
+
+            // Optionally, reset the animation after a short delay
+            StartCoroutine(ResetInteractAnimation());
+
+            // Check if the collided object has a component that implements IInteractable
+            IInteractable interactable = interactObject.GetComponent<IInteractable>();
+            if (interactable != null)
             {
-                // Trigger the interact animation
-                animator.SetBool("isInteracting", true);
-
-                // Optionally, reset the animation after a short delay
-                StartCoroutine(ResetInteractAnimation());
-
-                // Check if the collided object has a component that implements IInteractable
-                IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
-                if (interactable != null)
-                {
-                    interactable.receiveInteract();
-                }
+                interactable.receiveInteract();
             }
         }
     }
@@ -183,11 +183,26 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isInteracting", false);
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Interactable"))
+        {
+            //Show Prompt to Interact
+            playerCanInteract = true;
+            interactObject = collision.gameObject;
+            
+            
+        }
+    }
+
+    
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Interactable"))
         {
-            //Hid Prompt to Interact
+            playerCanInteract = false;
+            interactObject = null;
         }
     }
 
