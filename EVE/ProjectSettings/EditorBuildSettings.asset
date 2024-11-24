@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: 8cc610c56a70e43e6bb76a175d6b3838
+  - enabled: 1
+    path: Assets/Scenes/GrayBoxingLevel1.unity
+    guid: f5bd24a39bd0e48cfb98f5acebb4e256
+  - enabled: 1
+    path: Assets/Scenes/VanScene.unity
+    guid: d0b9306240c563c4fa6a0d914bb021b3
   m_configObjects: {}
