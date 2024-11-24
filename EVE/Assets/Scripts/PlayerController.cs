@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private GameObject interactObject = null;
     public GameObject interactSprite;
 
+    public GameObject camera;
 
     public LayerMask terrainLayer;
     public Rigidbody rb;
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         playerCanMove = true;
         playerCanInteract = false;
+        cameraTransform = camera.transform;
+        
 
     }
 
@@ -53,9 +56,13 @@ public class PlayerController : MonoBehaviour
         checkInventory();
         if(!DialogController.talking){
             movePlayer();
-            //FaceCamera();
+            FaceCamera();
         }
         interactCheck();
+        if (interactObject)
+        {
+            interactBought();
+        }
         typingCheck();
     }
 
@@ -92,7 +99,8 @@ public class PlayerController : MonoBehaviour
         // Rotate the sprite to face the camera
         if (directionToCamera != Vector3.zero)
         {
-            rbSprite.transform.rotation = Quaternion.LookRotation(directionToCamera);
+            rbSprite.transform.rotation = Quaternion.LookRotation(-directionToCamera);
+            interactSprite.transform.rotation = Quaternion.LookRotation(-directionToCamera);
         }
     }
 
@@ -109,7 +117,18 @@ public class PlayerController : MonoBehaviour
             moveInput.y = UserInput.instance.MoveInput.y;
             moveInput.Normalize();
 
-            rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed);
+            //Camera forward
+            Vector3 cameraForward = cameraTransform.forward;
+            cameraForward.y = 0;
+            cameraForward.Normalize();
+
+            Vector3 cameraRight = cameraTransform.right;
+            cameraRight.y = 0;
+            cameraRight.Normalize();
+
+            Vector3 movementDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y) * moveSpeed;
+            //rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed); //Old movement
+            rb.velocity = new Vector3(movementDirection.x, rb.velocity.y, movementDirection.z);
 
             // Calculate movement magnitude
             float movementMagnitude = moveInput.magnitude;
@@ -173,8 +192,18 @@ public class PlayerController : MonoBehaviour
             IInteractable interactable = interactObject.GetComponent<IInteractable>();
             if (interactable != null)
             {
+                interactSprite.SetActive(false);
                 interactable.receiveInteract();
             }
+        }
+    }
+
+    private void interactBought()
+    {
+        if (!interactObject.activeInHierarchy)
+        {
+            playerCanInteract = false;
+            interactObject = null;
         }
     }
 
