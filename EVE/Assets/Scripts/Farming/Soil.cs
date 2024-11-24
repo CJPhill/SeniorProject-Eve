@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Soil : MonoBehaviour, IInteractable
 {
-    private const float INTERACT_RADIUS = 5f;
+    private const float INTERACT_RADIUS = 2f;
 
     private Transform _playerTransform;
     [SerializeField] public InventoryManager inventoryManager;

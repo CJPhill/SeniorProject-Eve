@@ -7,21 +7,20 @@ public class GrowthController : MonoBehaviour
     [SerializeField] public LightingManager lightingManager;
 
     private GameObject currentStageInstance = null;
-    private GameObject previousStageInstance = null;
     private Vector3 plantSpawnPoint;
 
     private int currentStage = 0;
 
     void UpdateGrowthStage(List<GameObject> growthStagePrefabs)
     {
-        if (previousStageInstance != null && currentStage != growthStagePrefabs.Count)
+        if (currentStageInstance != null)
         {
-            Destroy(previousStageInstance);
+            Destroy(currentStageInstance);
+            Debug.Log("Destroyed current stage instance");
         }
 
         if (currentStage < growthStagePrefabs.Count)
         {
-            previousStageInstance = currentStageInstance;
             currentStageInstance = Instantiate(growthStagePrefabs[currentStage], plantSpawnPoint, Quaternion.identity);
         }
     }
