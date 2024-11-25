@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GrowthController : MonoBehaviour
 {
-    [SerializeField] public LightingManager lightingManager;
-
     private GameObject currentStageInstance = null;
     private Vector3 plantSpawnPoint;
 
@@ -25,7 +23,7 @@ public class GrowthController : MonoBehaviour
         }
     }
 
-    public IEnumerator GrowPlant(List<GameObject> growthStagePrefabs, int growthRate, Vector3 newSpawnPoint, System.Action onGrowthComplete)
+    public IEnumerator GrowPlant(List<GameObject> growthStagePrefabs, float timeOfDay, Vector3 newSpawnPoint, System.Action onGrowthComplete)
     {
         plantSpawnPoint = newSpawnPoint;
 
@@ -34,16 +32,18 @@ public class GrowthController : MonoBehaviour
 
         while (currentStage < growthStagePrefabs.Count)
         {
-            elapsedTime += Time.deltaTime;
+            // Adjust growth rate based on the stage and time of day
+            float adjustedGrowthRate = CalculateGrowthRate(timeOfDay, currentStage);
 
-            if (elapsedTime >= growthRate)
+            while (elapsedTime < adjustedGrowthRate)
             {
-                elapsedTime = 0f;
-                UpdateGrowthStage(growthStagePrefabs);
-                currentStage++;
+                elapsedTime += Time.deltaTime;
+                yield return null;
             }
 
-            yield return null;
+            elapsedTime = 0f;
+            UpdateGrowthStage(growthStagePrefabs);
+            currentStage++;
         }
 
         onGrowthComplete?.Invoke();
@@ -52,4 +52,16 @@ public class GrowthController : MonoBehaviour
     public void harvest(){
         Destroy(currentStageInstance);
     }
+
+private float CalculateGrowthRate(float timeOfDay, int stage)
+{
+    float baseGrowthTime = 10f;
+
+    float timeOfDayFactor = timeOfDay < 12 ? 1f + (timeOfDay / 12f) : 3f - (timeOfDay / 12f);
+
+    float stageFactor = 1f + (stage * 0.75f);
+
+    return baseGrowthTime * timeOfDayFactor * stageFactor;
+}
+
 }

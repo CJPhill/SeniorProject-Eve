@@ -65,6 +65,7 @@ public class Soil : MonoBehaviour, IInteractable
             {
                 plant.receiveInteract(); // Trigger harvesting
                 planted = false;
+                inventoryManager.AddItem(seed);
                 inventoryManager.AddItem(seed); // Add harvested seed/item
                 seed = null;
                 Destroy(plantedCrop); // Cleanup

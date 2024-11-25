@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Corn : Plant, IInteractable
 {
+
+    [Header("Dependencies")]
     [SerializeField] public List<GameObject> growthStagePrefabs; 
+    [SerializeField] public LightingManager lightingManager;
 
     public GrowthController GrowthController;
+
+    [Header("Local Variables")]
     public int growthRate = 2;
 
     public bool readyToGrow = true;
@@ -38,7 +43,8 @@ public class Corn : Plant, IInteractable
     public void Grow()
     {
         readyToGrow = false;
-        StartCoroutine(GrowthController.GrowPlant(growthStagePrefabs, growthRate, transform.position, onGrowthComplete));
+        float currentLightingFactor = lightingManager.TimeOfDay;
+        StartCoroutine(GrowthController.GrowPlant(growthStagePrefabs, currentLightingFactor, transform.position, onGrowthComplete));
     }
 
     public void Farm(){

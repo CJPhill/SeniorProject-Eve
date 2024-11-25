@@ -124,6 +124,7 @@ MonoBehaviour:
   - {fileID: 1470603941087077482, guid: ae9b751f71d9b4507b9bc7697d9f6655, type: 3}
   - {fileID: 2112290481904292856, guid: 98f7477151d534a0faf44bac273488d4, type: 3}
   - {fileID: 8126193415987881233, guid: 6597a0be457ae42d8a2d4a1aca61a184, type: 3}
+  lightingManager: {fileID: 3322219575247011947, guid: 850ff44c794e24d459374896b2d42551, type: 3}
   GrowthController: {fileID: 3455594484769502726}
   growthRate: 2
   readyToGrow: 0
@@ -140,4 +141,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b9693b115f3414ca19fe89c8ffe597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightingManager: {fileID: 0}
