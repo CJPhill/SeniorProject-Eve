@@ -21,17 +21,17 @@ public abstract class NPC : MonoBehaviour, IInteractable
     // Update is called once per frame
     private void Update()
     {
-        if(UserInput.instance.Interact && isPlayerInRange())
-        {
-            receiveInteract();
-        }
+        //if(UserInput.instance.Interact && isPlayerInRange())
+        //{
+        //    receiveInteract();
+        //}
 
-        if(_interactSprite.gameObject.activeSelf && !isPlayerInRange()){
-            _interactSprite.gameObject.SetActive(false);
-        }
-        else if(!_interactSprite.gameObject.activeSelf && isPlayerInRange()){
-            _interactSprite.gameObject.SetActive(true);
-        }
+        //if(_interactSprite.gameObject.activeSelf && !isPlayerInRange()){
+        //    _interactSprite.gameObject.SetActive(false);
+        //}
+        //else if(!_interactSprite.gameObject.activeSelf && isPlayerInRange()){
+        //    _interactSprite.gameObject.SetActive(true);
+        //}
     }
 
     public abstract void receiveInteract();
