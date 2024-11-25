@@ -53,7 +53,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         checkMenu();
-        checkInventory();
+        if (inventory)
+        {
+            checkInventory();
+        }
         if(!DialogController.talking){
             movePlayer();
             FaceCamera();

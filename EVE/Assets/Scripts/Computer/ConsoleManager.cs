@@ -57,7 +57,7 @@ public class ConsoleManager : MonoBehaviour
         switch (command.ToLower())
         {
             case "help":
-                return "Available commands: help, clear, hello, mail, mark read <number>, mark unread <number>";
+                return "Available commands: help, clear, hello, mail, mark read <number>, mark unread <number>, quit";
             case "clear":
                 ClearConsole();
                 return "Console cleared.";
