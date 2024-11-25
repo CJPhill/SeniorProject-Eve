@@ -48,4 +48,8 @@ public class GrowthController : MonoBehaviour
 
         onGrowthComplete?.Invoke();
     }
+
+    public void harvest(){
+        Destroy(currentStageInstance);
+    }
 }

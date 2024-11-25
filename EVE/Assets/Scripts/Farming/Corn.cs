@@ -24,9 +24,9 @@ public class Corn : Plant, IInteractable
             readyToGrow = true;
         }
 
+        Debug.Log("Interacting with Corn");
         if(readyToHarvest)
-        {
-            Debug.Log("Harvesting Corn");
+        {            
             Farm();
         }
         else if(readyToGrow)
@@ -45,6 +45,7 @@ public class Corn : Plant, IInteractable
         readyToHarvest = false;
         readyToGrow = true;
         Debug.Log("Farming Corn");
+        GrowthController.harvest();
     }
 
     private void onGrowthComplete()

@@ -130,6 +130,17 @@
                     "action": "InventoryOpenClose",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d59c81c1-7dd3-4a5d-9311-6c85be1dc0e9",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventoryOpenClose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

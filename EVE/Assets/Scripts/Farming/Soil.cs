@@ -11,60 +11,69 @@ public class Soil : MonoBehaviour, IInteractable
     private Transform _playerTransform;
     [SerializeField] public InventoryManager inventoryManager;
 
-    private IInteractable interactableCrop;
-
     private InventoryItem holding = null;
-    private GameObject cropPrefab;
-
-    public bool planted = false;
     private GameObject plantedCrop;
     public Item seed;
 
-    private void Start() {
+    public bool planted = false;
+
+    private void Start()
+    {
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (UserInput.instance.Interact && isPlayerInRange())
-        {   
+        {
             receiveInteract();
         }
     }
 
-    public void receiveInteract() {
-        //plant seed
+    public void receiveInteract()
+    {
+        // Planting logic
         holding = inventoryManager.ItemHeld();
-
-        if (holding != null && !planted) {
-            //  && holding.item.type == ItemType.BuildingBlock
-
-            cropPrefab = Resources.Load<GameObject>($"{holding.gameObject.GetComponent<Image>().sprite.name}");
-            if (cropPrefab == null) {
+        if (holding != null && !planted)
+        {
+            GameObject cropPrefab = Resources.Load<GameObject>($"{holding.gameObject.GetComponent<Image>().sprite.name}");
+            if (cropPrefab == null)
+            {
                 Debug.LogError($"{holding.gameObject.GetComponent<Image>().sprite.name} prefab not found in Resources folder.");
+                return;
             }
 
-            seed = holding.item;
             plantedCrop = Instantiate(cropPrefab, transform.position, Quaternion.identity);
-            
-            interactableCrop = plantedCrop.GetComponent<IInteractable>();
-            if (interactableCrop != null) {
+            Plant plant = plantedCrop.GetComponent<Plant>();
+
+            if (plant != null)
+            {
+                seed = holding.item;
                 planted = true;
-                interactableCrop.receiveInteract(); 
-                inventoryManager.GetSelectedItem();
+                inventoryManager.GetSelectedItem(); // Remove seed from inventory
+
+                // Ensure the plant starts its growth independently
+                plant.receiveInteract();
             }
         }
 
-        //harvest crop
-        else if(planted) {
-            planted = false;
-            interactableCrop.receiveInteract();
-            inventoryManager.AddItem(seed);
-            seed = null;
-            Destroy(plantedCrop);
+        // Harvesting logic
+        else if (planted)
+        {
+            Plant plant = plantedCrop.GetComponent<Plant>();
+            if (plant != null)
+            {
+                plant.receiveInteract(); // Trigger harvesting
+                planted = false;
+                inventoryManager.AddItem(seed); // Add harvested seed/item
+                seed = null;
+                Destroy(plantedCrop); // Cleanup
+            }
         }
     }
 
-    private bool isPlayerInRange() {
+    private bool isPlayerInRange()
+    {
         return Vector3.Distance(transform.position, _playerTransform.position) < INTERACT_RADIUS;
     }
 }
