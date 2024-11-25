@@ -22,6 +22,8 @@ public class DialogController : MonoBehaviour
     private Coroutine typeDialogueCoroutine;
     private const float MAX_TYPE_TIME = 0.5f;
 
+    private InventoryManager inventoryManager;
+
     public void DisplayNextDialog(DialogueText dialogueText)
     {
         if(dialogueLines.Count == 0)
@@ -101,4 +103,10 @@ public class DialogController : MonoBehaviour
 
         isTyping = false;
     }
+
+    // private void onFinishDialogue(InventoyManager inventoryManager, InventoryItem present){
+    //     conversationEnded = true;
+
+    //     inventoryManager.AddItem(present);
+    // }
 }
