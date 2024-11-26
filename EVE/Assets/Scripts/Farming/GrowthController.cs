@@ -27,6 +27,8 @@ public class GrowthController : MonoBehaviour
     {
         plantSpawnPoint = newSpawnPoint;
 
+        plantSpawnPoint.y += 0.7f;
+
         float elapsedTime = 0;
         currentStage = 0;
 
@@ -55,7 +57,7 @@ public class GrowthController : MonoBehaviour
 
 private float CalculateGrowthRate(float timeOfDay, int stage)
 {
-    float baseGrowthTime = 10f;
+    float baseGrowthTime = 1;
 
     float timeOfDayFactor = timeOfDay < 12 ? 1f + (timeOfDay / 12f) : 3f - (timeOfDay / 12f);
 
