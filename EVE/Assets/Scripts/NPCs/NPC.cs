@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public abstract class NPC : MonoBehaviour, IInteractable
 {
-    [SerializeField] private SpriteRenderer _interactSprite;
+    // [SerializeField] private SpriteRenderer _interactSprite;
 
     private const float INTERACT_RADIUS = 5f;
 

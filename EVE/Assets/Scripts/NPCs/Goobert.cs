@@ -14,14 +14,12 @@ public class Goobert : NPC, ITalkable
 
     public override void receiveInteract()
     {
-        Talk(dialogueText, () => 
-        {
-            inventoryManager.AddItem(present);
-        });
+        Talk(dialogueText);
     }
 
-    public void Talk(DialogueText dialogueText, System.Action onFinishDialogue)
+    public void Talk(DialogueText dialogueText)
     {            
+        Debug.Log("Talking to Goobert");
         dialogController.gameObject.SetActive(!dialogueActive);
         dialogController.DisplayNextDialog(dialogueText);
 

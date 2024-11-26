@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IslandExpansion : MonoBehaviour, IInteractable
+public class Red : NPC, IInteractable
 {
     public int moneyRequired = 100;
     public bool built = false; //Maybe not needed
@@ -11,6 +11,11 @@ public class IslandExpansion : MonoBehaviour, IInteractable
     public GameObject camera;
     private Transform cameraTransform;
     public SpriteRenderer rbSprite;
+
+    [SerializeField] private DialogueText dialogueText;
+    [SerializeField] private DialogController dialogController;
+
+    private bool dialogueActive;
 
     private void Start()
     {
@@ -37,18 +42,25 @@ public class IslandExpansion : MonoBehaviour, IInteractable
         }
     }
 
-    public void receiveInteract()
+    public override void receiveInteract()
     {
      //Check if player or inventory has money
      if (hasMoney)
         {
             if (bridge)
             {
+                Talk(dialogueText);
                 bridge.SetActive(true);
                 Debug.Log("You expanded your island!");
-                gameObject.SetActive(false);
             }
         }
-     
+    }
+
+    public void Talk(DialogueText dialogueText)
+    {            
+        dialogController.gameObject.SetActive(!dialogueActive);
+        dialogController.DisplayNextDialog(dialogueText);
+
+        // onFinishDialogue?.Invoke();
     }
 }

@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private RaycastHit slopeHit;
 
     [Header("Interaction")]
-    private bool playerCanInteract;
+    public bool playerCanInteract;
     private GameObject interactObject = null;
     public GameObject interactSprite;
 
