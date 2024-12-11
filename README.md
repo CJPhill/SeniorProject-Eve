@@ -17,7 +17,7 @@ Wait for the plant to grow (currently sped up for demo purposes)
 You can interact with other characters with E and receive dialogue.
 
 #### In the van
-Currently, you can interact with the terminal computer to see what is planned for the future, including a plant travel system and storage.
+Currently, you can interact with the terminal computer to see what is planned for the future, including a planet travel system and storage.
 
 
 ### Running the game
