@@ -22,9 +22,9 @@ Currently, you can interact with the terminal computer to see what is planned fo
 
 ### Running the game
 
-This game is built for Windows only and will only run on a Windows machine.
+This game is built for **Windows only** and will only run on a Windows machine.
 
 1. Download the files present
-2. Find the Build.zip and unzip
-3. Open and use the EVE unity application (EVE.exe)
-4. Enjoy!
+2. Find the Build.zip (Located inside the EVE Folder) and unzip it.
+3. Open the Build folder you just unzipped and use the EVE unity application (EVE.exe)
+4. Enjoy! (If any issues come up with the game, please relaunch the game)
