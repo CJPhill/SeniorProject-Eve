@@ -1,0 +1,24 @@
+CMSI 4072 Spring 2025
+Project Proposal Feedback
+Project: Eve
+=========================
+Proposal Document [1 points]:
+   This is the same document as before.  You were supposed to include in a
+   new version what you plan to work on this semester to add to what you
+   accomplished last time.  You have all the document parts from last time,
+   but nothing new.  Hmmmmm...
+
+Proposal Presentation [3 points]:
+   Lovely presentation as usual.  You all seem to have practiced so you know
+   your parts and what you are going to say.  The slides are really pretty,
+   I'm sure that's a product of your focus on the artwork.  Well done!
+
+
+Summary:
+--------
+Total:  4% out of 5% for this deliverable.
+
+Nice job overall!  Not a bad start to the semester, but remember this is an
+extension of your last semester's project, so you'll need to put in language
+about updates and additions this time around.
+
