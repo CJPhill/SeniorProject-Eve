@@ -63,7 +63,7 @@ public class DialogController : MonoBehaviour
             dialogueCanvas.gameObject.SetActive(true);
         }
 
-        NPCName.text = dialogueText.speakerName;
+        //NPCName.text = dialogueText.speakerName;
 
         for(int i = 0; i < dialogueText.dialogueLines.Length; i++){
             dialogueLines.Enqueue(dialogueText.dialogueLines[i]);

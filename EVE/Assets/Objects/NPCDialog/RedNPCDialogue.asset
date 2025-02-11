@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speakerName: 
   dialogueLines:
-  - Hello! Let me build this bridge for you!
+  - Oh, you want to go to that island?
+  - I could build you a bridge if you would like!
+  - It's on me this time EVE!
