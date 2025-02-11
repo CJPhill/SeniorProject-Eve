@@ -7,7 +7,6 @@ using UnityEngine;
 public class DialogueText : ScriptableObject
 {
     public string speakerName;
-
     [TextArea(3, 10)]
     public string[] dialogueLines;
 }

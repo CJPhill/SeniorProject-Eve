@@ -18,6 +18,7 @@ public class LightingManager : MonoBehaviour
 
     private void Start()
     {
+        TimeOfDay = 7.50f;
         CalculateTimeMultiplier();
     }
 
