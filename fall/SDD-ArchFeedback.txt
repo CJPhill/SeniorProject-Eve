@@ -1,0 +1,47 @@
+
+Documentation Feedback ~ Deliverable #4
+Software Design Document ~ Architecture
+CMSI 4071 Fall 2024
+=======================================
+
+SDD: ARCHITECTURAL DESIGN SECTION:
+   Major software components section
+      Good breakdown on this section.  You have done excellent work on this
+      portion and obviously have planned your application well.  Nothing to
+      add here.
+
+   Major software interactions section
+      Very nice work on this section as well.  You have defined the game's
+      interactions clearly.  Nothing to add here.
+
+   Architectural design diagrams section
+      The diagrams are good and I like the use of color.  The text is a bit
+      small, but can be read if you enlarge the document on the screen.  It
+      will be hard to read on a printed copy, though.
+
+OVERALL ASSESSMENT:
+   Category                          Points
+   --------------------------------  ---------
+   ARCHITECTURAL DESIGN SECTION:
+   Major software components            2 of  2
+   Major software interactions          2 of  2
+   Architectural design diagrams        6 of  6
+                                     ===========
+   Subtotal                            10 of 10
+   ------------------------------------------------------
+   Total Percentage:  10/10 = 100% which is an A-plus
+
+============================================================================
+COMMENTS
+I can't evaluate what isn't there...
+
+Turn in a copy of the Architectural section with your Detailed Design section
+and you'll get at least partial credit on this portion.
+
+=====
+Revisited:
+   You fooled me since you put everything into one document and called it the
+   "requirements document".  Once I found that out, I re-evaluated, and now
+   you have a good score.
+
+   Nice work!
