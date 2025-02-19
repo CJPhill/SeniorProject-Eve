@@ -1,0 +1,37 @@
+
+New Individual Project
+Documentation Feedback ~ Deliverable #2
+Software Requirements Specification &
+Initial Development Schedule
+CMSI 4072 Spring 2025
+=======================================
+
+COMPONENT BREAKDOWN:
+   Not required for this semester's exercise
+
+FUNCTIONAL REQUIREMENTS:
+
+PERFORMANCE REQUIREMENTS:
+
+ENVIRONMENT REQUIREMENTS:
+
+OVERALL ASSESSMENT:
+   Category                          Points
+   Component Breakdown                 2/2
+   Functional Requirements             5/5
+   Performance Requirements            2/2
+   Environment Requirements            1/1
+                                     =====
+   Subtotal                          10/10
+   ------------------------------------------------------
+   Total Percentage:   10/10 = 100% which is an A-plus
+
+I'm not sure quite how to evaluate this, since it's not in requirements form
+but since there are three documents that add up to basically what would be
+in a requirements document, I'm calling it good.
+
+If this is your *design* documentation though, then you need to do something
+different for your requirements.  Perhaps we should talk together about this
+this coming week.
+
+What you have done is VERY good, though.
