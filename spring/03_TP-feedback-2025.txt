@@ -1,0 +1,48 @@
+
+Continuing Group Project
+Documentation Feedback ~ Deliverable #3
+Initial Test Procedure Document
+CMSI 4072 Spring 2025
+=======================================
+
+LIST OF REQUIREMENTS/ACCEPTANCE CRITERIA:
+   Not done.
+
+SOFTWARE START-UP PROCEDURE:
+   Not done.
+
+TEST STEP FOR EACH REQUIREMENT/CRITERIA:
+   Not done.
+
+OVERALL ASSESSMENT:
+   Category                          Points
+   Requirements/Criteria List          0/2
+   Software start-up procedure         0/2
+   Test step ea. requirement/crit.     0/6
+                                     =====
+   Subtotal                           0/10
+   ------------------------------------------------------
+   Total Percentage:   0/10 = 0% which is an F on this deliverable.
+
+I can't evaluate what isn't there.  Get something together for this and
+   put it into your repository for the NEXT time to get at least some credit
+   for the document for deliverable #5.  See below.
+
+
+----------------------------------------------------------------------------
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+----------------------------------------------------------------------------
+
+Documentation Feedback ~ Deliverable #5
+Test Procedure Document Complete
+============================================
+
+OVERALL ASSESSMENT:
+           Category                                Points
+   Comments from first submission incorporated       8/8
+   Spelling and Grammar in document acceptable       2/2
+                                                   =====
+   Subtotal                                        10/10
+   ------------------------------------------------------
+   Total Percentage:   10/10 = 100% which is an A-plus

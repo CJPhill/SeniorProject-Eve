@@ -1,0 +1,47 @@
+
+Continuing Group Project
+Documentation Feedback ~ Deliverable #2
+Updated Software Requirements Specification
+   Initial Development Schedule
+CMSI 4072 Spring 2025
+===========================================
+
+COMPONENT BREAKDOWN:
+   New components added 2nd semester [y/n]
+   Not required for this semester
+
+FUNCTIONAL REQUIREMENTS:
+   New requirements added 2nd semester [y/n]
+   New requirements adequate [y/n]
+
+   Not done.
+
+PERFORMANCE REQUIREMENTS:
+   New requirements added 2nd semester [y/n]
+   New requirements adequate [y/n]
+
+   Not done.
+
+OVERALL ASSESSMENT:
+   Category                          Points
+   Component Breakdown                 1/1
+   Functional Requirements             0/4
+   Performance Requirements            0/4
+   Environment Requirements            1/1
+                                     =====
+   Subtotal                           2/10
+   ------------------------------------------------------
+   Total Percentage:   2/10 = 20% which is an F on this deliverable
+
+COMMENTS:
+---------
+
+Since this is a continuing group project, you were supposed to update the
+   original SRS for this submission and add in new things you are going to
+   do this semester.  That means additional requirements, both functional
+   and performance, as well as possibly expanded or additional sections in
+   those two categories.  I don't even see an SRS document in your repository
+   at this point.  I can't evaluate what isn't there.
+
+   The points you did get are due to the fact that I'm giving away points for
+   those two sections.
