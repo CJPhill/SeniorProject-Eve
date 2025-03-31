@@ -6,28 +6,34 @@ CMSI 4072 Spring 2025
 =======================================
 
 LIST OF REQUIREMENTS/ACCEPTANCE CRITERIA:
-   Not done.
+   Not done to start.
+   Re-evaluated 2025-03-30 ~ this section is missing.
 
 SOFTWARE START-UP PROCEDURE:
-   Not done.
+   Not done to start.
+   Re-evaluated 2025-03-30 ~ Good
 
 TEST STEP FOR EACH REQUIREMENT/CRITERIA:
-   Not done.
+   Not done to start.
+   Re-evaluated 2025-03-30 ~ EXCELLENT job with this section!
 
 OVERALL ASSESSMENT:
    Category                          Points
    Requirements/Criteria List          0/2
-   Software start-up procedure         0/2
-   Test step ea. requirement/crit.     0/6
+   Software start-up procedure         2/2
+   Test step ea. requirement/crit.     6/6
                                      =====
-   Subtotal                           0/10
+   Subtotal                           8/10
    ------------------------------------------------------
-   Total Percentage:   0/10 = 0% which is an F on this deliverable.
+   Total Percentage:   8/10 = 80% which is a B on this deliverable.
 
 I can't evaluate what isn't there.  Get something together for this and
    put it into your repository for the NEXT time to get at least some credit
    for the document for deliverable #5.  See below.
-
+----------------
+Re-evaluated 2025-03-30, updated evaluation above.  Still needs the list of
+requirements that will be tested, and the start up procedure good be a bit
+more specific with the steps.
 
 ----------------------------------------------------------------------------
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
