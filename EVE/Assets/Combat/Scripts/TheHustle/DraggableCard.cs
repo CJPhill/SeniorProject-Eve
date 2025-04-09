@@ -10,33 +10,48 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public CardSlot AssignedSlot { get; set; }
     public Transform playArea;
     public float swapRange = 100f;
+    private Vector2 dragOffset;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();  // Ensure we are getting the right canvas
+        if (playArea == null)
+        {
+            var playAreaObject = GameObject.FindGameObjectWithTag("PlayArea");
+            if (playAreaObject != null)
+                playArea = playAreaObject.transform;
+        }
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Disable raycasting during the drag to avoid blocking UI interactions
         canvasGroup.blocksRaycasts = false;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.transform as RectTransform,
+            eventData.position,
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
+            out var localPoint
+        );
+
+        dragOffset = rectTransform.anchoredPosition - localPoint;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Convert screen space mouse position to local space in the canvas
-        Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform, eventData.position,
+            canvas.transform as RectTransform,
+            eventData.position,
             canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
-            out localPoint
+            out var localPoint
         );
 
-        // Update the card's position based on the mouse position
-        rectTransform.anchoredPosition = localPoint;
+        rectTransform.anchoredPosition = localPoint + dragOffset;
     }
+
 
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -102,6 +117,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private bool IsInPlayArea()
     {
+        Debug.Log("Checking if in play area");
         return RectTransformUtility.RectangleContainsScreenPoint(
             playArea as RectTransform,
             Input.mousePosition,
@@ -111,10 +127,11 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void PlayCard()
     {
+        Debug.Log("Play Card");
         // Trigger action, move to graveyard
-        Debug.Log($"Played: {GetComponent<CardDisplay>().CardData.cardName}");
+        //Debug.Log($"Played: {GetComponent<CardDisplay>().CardData.cardName}"); //NOTES: Currently bugs if run needs update on display
         AssignedSlot.currentCard = null;
-        Destroy(gameObject);
+        Destroy(this.gameObject);
         // Optionally: notify HandManager to refill hand
     }
 }

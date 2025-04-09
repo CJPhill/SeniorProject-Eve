@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
     public List<CardData> allPossibleCards;
     private Queue<CardData> deck = new Queue<CardData>();
+    [HideInInspector] public int numOfCardsInDeck = 0;
+    public TextMeshProUGUI DeckAmountText;
 
     public void InitializeDeck()
     {
@@ -12,6 +15,7 @@ public class DeckManager : MonoBehaviour
         Shuffle(tempDeck);
 
         deck = new Queue<CardData>(tempDeck);
+        DeckAmountText.text = deck.Count.ToString();
         //for card in cards
         foreach (CardData card in deck)
         {
@@ -23,6 +27,13 @@ public class DeckManager : MonoBehaviour
     {
         return deck.Count > 0 ? deck.Dequeue() : null;
     }
+
+    public void UpdateDeckAmount()
+    {
+        DeckAmountText.text = deck.Count.ToString();
+    }
+
+
 
     private void Shuffle(List<CardData> list)
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HandManager : MonoBehaviour
 {
@@ -13,12 +14,14 @@ public class HandManager : MonoBehaviour
     {
         deckManager.InitializeDeck();
         slots = slotParent.GetComponentsInChildren<CardSlot>();
+        Debug.Log(slots.Length);
 
         for (int i = 0; i < 5; i++)
         {
             Debug.Log("Drawing card to slot " + i);
             DrawToSlot(i);
         }
+       
     }
 
     public void DrawToSlot(int index)
@@ -34,5 +37,6 @@ public class HandManager : MonoBehaviour
             drag.AssignedSlot = slots[index];
             slots[index].currentCard = drag;
         }
+        deckManager.UpdateDeckAmount();
     }
 }
