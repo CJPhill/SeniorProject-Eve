@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem.Android;
+using System.Runtime.CompilerServices;
 
 public class HandManager : MonoBehaviour
 {
@@ -24,6 +26,28 @@ public class HandManager : MonoBehaviour
        
     }
 
+    public void RefreshSlots()
+    {
+        Debug.Log("Refreshing Hand");
+        bool handFull = true;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].currentCard == null)
+            {
+                
+                DrawToSlot(i);
+                handFull = false;
+
+
+            }
+            else
+            {
+                Debug.Log("card in slot: " + i);
+
+            }
+        }
+    }
+
     public void DrawToSlot(int index)
     {
         CardData drawn = deckManager.DrawCard();
@@ -31,7 +55,9 @@ public class HandManager : MonoBehaviour
         {
             GameObject cardGO = Instantiate(cardPrefab, slots[index].transform);
             CardDisplay display = cardGO.GetComponent<CardDisplay>();
+            DraggableCard draggableCard = cardGO.GetComponent<DraggableCard>();
             display.Setup(drawn);
+            draggableCard.setup(drawn);
 
             DraggableCard drag = cardGO.GetComponent<DraggableCard>();
             drag.AssignedSlot = slots[index];

@@ -11,6 +11,10 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Transform playArea;
     public float swapRange = 100f;
     private Vector2 dragOffset;
+    private TurnManager turnManager;
+    private CardData cardData;
+    public CardData CardData => cardData;
+    private int cardMana;
 
     private void Awake()
     {
@@ -23,7 +27,15 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             if (playAreaObject != null)
                 playArea = playAreaObject.transform;
         }
+        turnManager = GameObject.FindAnyObjectByType<TurnManager>();
 
+
+    }
+
+    public void setup (CardData cardData)
+    {
+        this.cardData = cardData;
+        cardMana = cardData.manaCost;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -128,10 +140,24 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private void PlayCard()
     {
         Debug.Log("Play Card");
-        // Trigger action, move to graveyard
-        //Debug.Log($"Played: {GetComponent<CardDisplay>().CardData.cardName}"); //NOTES: Currently bugs if run needs update on display
-        AssignedSlot.currentCard = null;
-        Destroy(this.gameObject);
-        // Optionally: notify HandManager to refill hand
+
+        if (turnManager.canPlayCard(cardMana))
+        {
+            int currentMana = turnManager.PlayerManaCheck();
+            int maxMana = turnManager.PlayerMaxCheck();
+            Debug.Log("current card mana: " + cardMana);
+            Debug.Log("Current Player Mana: " + currentMana);
+            Debug.Log("Current Max Mana: " + maxMana);
+            // Trigger action, move to graveyard
+            //Debug.Log($"Played: {GetComponent<CardDisplay>().CardData.cardName}"); //NOTES: Currently bugs if run needs update on display
+            AssignedSlot.currentCard = null;
+            Destroy(this.gameObject);
+            // Optionally: notify HandManager to refill hand
+        }
+        else
+        {
+            ResetPosition();
+        }
+
     }
 }
