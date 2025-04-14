@@ -7,6 +7,7 @@ TagManager:
   - Interactable
   - Computer
   - GrowthController
+  - InventoryCamera
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Terrain
   - NoPixel
   - PostPixel
-  - 
+  - PostProcessUI
   - 
   - 
   - 

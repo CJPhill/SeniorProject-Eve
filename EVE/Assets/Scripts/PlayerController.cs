@@ -4,6 +4,7 @@ using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,6 +39,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject menu = null;
     [SerializeField] private GameObject inventory = null;
 
+    public Camera uiCamera;
+    public Image inventoryImage;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -45,8 +49,6 @@ public class PlayerController : MonoBehaviour
         playerCanMove = true;
         playerCanInteract = false;
         cameraTransform = camera.transform;
-        
-
     }
 
     private void Update()
@@ -66,6 +68,7 @@ public class PlayerController : MonoBehaviour
             interactBought();
         }
         typingCheck();
+        
     }
 
     /// <summary>
@@ -86,8 +89,16 @@ public class PlayerController : MonoBehaviour
     private void checkInventory(){
         if (UserInput.instance.InventoryOpenClose)
         {
-            inventoryActive = !inventoryActive;
-            inventory.SetActive(inventoryActive);
+            if (GameManager.inventoryCamera != null)
+            {
+                GameManager.inventoryCamera.enabled = !GameManager.inventoryCamera.enabled;    
+            }
+            if (inventoryImage != null)
+            {
+                inventoryImage.gameObject.SetActive(!inventoryImage.gameObject.activeSelf);
+            }
+            // inventoryActive = !inventoryActive;
+            // inventory.SetActive(inventoryActive);
         }
     }
     private void FaceCamera()

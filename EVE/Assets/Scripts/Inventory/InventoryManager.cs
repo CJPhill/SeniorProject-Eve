@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager instance; 
+
     public int maxStackedItems = 4;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
@@ -12,6 +14,22 @@ public class InventoryManager : MonoBehaviour
 
     private void Start() {
         ChangeSelectedSlot(0);
+
+        if (DraggedItemData.item != null) {
+            AddDraggedItemToInventory();
+        }
+    }
+
+     private void Awake() {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject); 
+        }
     }
 
     private void Update() {
@@ -20,6 +38,19 @@ public class InventoryManager : MonoBehaviour
             if (isNumber && number > 0 && number <= 9) {
                 ChangeSelectedSlot(number - 1);
             }
+        }
+    }
+
+    void AddDraggedItemToInventory() {
+        Item item = DraggedItemData.item;
+        int itemCount = DraggedItemData.count;
+
+        // Clear DraggedItemData immediately after using
+        DraggedItemData.item = null;
+        DraggedItemData.count = 0;
+
+        for (int i = 0; i < itemCount; i++) {
+            AddItem(item);
         }
     }
 
