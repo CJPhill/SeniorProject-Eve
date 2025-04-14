@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
@@ -14,10 +16,15 @@ public class TurnManager : MonoBehaviour
     public HealthManager playerHealth;
     public HealthManager enemyHealth;
     public TextMeshProUGUI PlayerManaTxt;
+    public TextMeshProUGUI EndturnTxt;
+    public Button EndTurnBtn;
+    public Button CoreBtn;
+    private int coreAmount = 0;
 
     //Card Bools
     private bool scoutEffect;
     private bool enemyStun;
+    private bool ScoutTurn;
 
 
     private void Start()
@@ -30,6 +37,8 @@ public class TurnManager : MonoBehaviour
         PlayerManaTxt.text = playerMana.ToString();
         scoutEffect = false;
         enemyStun = false;
+        ScoutTurn = false;
+        coreAmount = 0;
     }
 
 
@@ -38,13 +47,16 @@ public class TurnManager : MonoBehaviour
                                   //Currently attached to EndTurn for testing!!!
     {
         //restock players hand
-        if (!enemyStun)
+        if (!ScoutTurn)
         {
-            playerHealth.takeDamage(5);
-        }
-        if (playerManaMax < ManaCap)
-        {
-            playerManaMax++;
+            if (!enemyStun)
+            {
+                playerHealth.takeDamage(5);
+            }
+            if (playerManaMax < ManaCap)
+            {
+                playerManaMax++;
+            }
         }
         playerMana = playerManaMax;
         PlayerManaTxt.text = playerMana.ToString();
@@ -52,6 +64,9 @@ public class TurnManager : MonoBehaviour
         //Dealing with card refresh
         handManager.RefreshSlots();
         enemyStun = false;
+        EndturnTxt.text = "End Turn";
+        EndTurnBtn.GetComponent<Image>().color = Color.white;
+        //CoreBtn.GetComponent<Image>().color = Color.white;
 
     }
 
@@ -62,6 +77,10 @@ public class TurnManager : MonoBehaviour
         {
             playerMana -= cardMana;
             PlayerManaTxt.text = playerMana.ToString();
+            if (playerMana <= 0)
+            {
+                EndTurnBtn.GetComponent<Image>().color = Color.green;
+            }
             return true;
         }
         else
@@ -117,5 +136,35 @@ public class TurnManager : MonoBehaviour
             enemyHealth.takeDamage(10);
         }
 
+    }
+
+
+    public void PowerCore()
+    {
+        if (playerMana > 0)
+        {
+            coreAmount += playerMana;
+            Debug.Log("core amount at: " + coreAmount);
+            playerMana = 0;
+            PlayerManaTxt.text = playerMana.ToString();
+            EndTurnBtn.GetComponent<Image>().color = Color.green;
+
+
+        }
+        else
+        {
+            Debug.Log("No mana to use");
+        }
+        //UGHHHHH CHEESEBURGER WITH UHHHHHHHHHHH 10 pickels no burger extra bun
+        if (coreAmount >= 5)
+        {
+            Debug.Log("Core Active");
+            ScoutTurn = true;
+            EndturnTxt.text = "Extra Turn!";
+            coreAmount = 0;
+            Color neonBlue = new Color(0.3f, 1f, 1f, 1f);
+            EndTurnBtn.GetComponent<Image>().color = neonBlue;
+
+        }
     }
 }
