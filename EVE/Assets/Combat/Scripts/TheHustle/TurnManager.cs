@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,10 @@ public class TurnManager : MonoBehaviour
     public Button EndTurnBtn;
     public Button CoreBtn;
     private int coreAmount = 0;
+
+    //Animation
+    public Animator controller;
+    public Animator EnemyController;
 
     //Card Bools
     private bool scoutEffect;
@@ -113,6 +118,8 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Attack");
             enemyHealth.takeDamage(card.Amount1);
+            controller.SetTrigger("Attack");
+            EnemyController.SetTrigger("Hit");
         }
         else if (card.cardType == 1) //Healing
         {
@@ -134,6 +141,8 @@ public class TurnManager : MonoBehaviour
                 enemyStun = true;
             }
             enemyHealth.takeDamage(10);
+            controller.SetTrigger("Attack");
+            EnemyController.SetTrigger("Hit");
         }
 
     }
