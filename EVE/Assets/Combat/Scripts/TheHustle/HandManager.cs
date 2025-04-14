@@ -9,6 +9,7 @@ public class HandManager : MonoBehaviour
     public Transform slotParent; // Holds 5 empty CardSlot UI objects
     public GameObject cardPrefab;
     public DeckManager deckManager;
+    public GraveyardManager graveyardManager;
 
     private CardSlot[] slots;
 
@@ -16,6 +17,7 @@ public class HandManager : MonoBehaviour
     {
         deckManager.InitializeDeck();
         slots = slotParent.GetComponentsInChildren<CardSlot>();
+        graveyardManager = GameObject.FindAnyObjectByType<GraveyardManager>();
         Debug.Log(slots.Length);
 
         for (int i = 0; i < 5; i++)
@@ -30,22 +32,32 @@ public class HandManager : MonoBehaviour
     {
         Debug.Log("Refreshing Hand");
         bool handFull = true;
-        for (int i = 0; i < slots.Length; i++)
+        if (deckManager.numOfCardsInDeck == 0)
         {
-            if (slots[i].currentCard == null)
+            Debug.Log("Deck is empty, moving cards from graveyard");
+            graveyardManager.refreshGraveyard();
+            deckManager.UpdateDeckAmount();
+        }
+        else
+        {
+            for (int i = 0; i < slots.Length; i++)
             {
-                
-                DrawToSlot(i);
-                handFull = false;
+                if (slots[i].currentCard == null)
+                {
+
+                    DrawToSlot(i);
+                    handFull = false;
 
 
-            }
-            else
-            {
-                Debug.Log("card in slot: " + i);
+                }
+                else
+                {
+                    Debug.Log("card in slot: " + i);
 
+                }
             }
         }
+            
     }
 
     public void DrawToSlot(int index)

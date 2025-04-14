@@ -12,15 +12,19 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public float swapRange = 100f;
     private Vector2 dragOffset;
     private TurnManager turnManager;
+    private GraveyardManager graveyardManager;
+
     private CardData cardData;
     public CardData CardData => cardData;
     private int cardMana;
+
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();  // Ensure we are getting the right canvas
+        graveyardManager = GameObject.FindAnyObjectByType<GraveyardManager>();
         if (playArea == null)
         {
             var playAreaObject = GameObject.FindGameObjectWithTag("PlayArea");
@@ -150,6 +154,8 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             Debug.Log("Current Max Mana: " + maxMana);
             // Trigger action, move to graveyard
             //Debug.Log($"Played: {GetComponent<CardDisplay>().CardData.cardName}"); //NOTES: Currently bugs if run needs update on display
+            graveyardManager.AddToGraveyard(cardData);
+            turnManager.useCard(cardData);
             AssignedSlot.currentCard = null;
             Destroy(this.gameObject);
             // Optionally: notify HandManager to refill hand
@@ -160,4 +166,10 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
 
     }
+
+
+
+
+
+
 }

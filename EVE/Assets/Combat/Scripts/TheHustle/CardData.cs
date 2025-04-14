@@ -11,4 +11,6 @@ public class CardData : ScriptableObject
     public string description;
     public int manaCost;
     public int rarity;
+    public int cardType; // 0 = Attack, 1 = Defense, 2 = Utility
+    public int Amount1;
 }

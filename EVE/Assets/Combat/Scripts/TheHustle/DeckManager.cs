@@ -17,6 +17,7 @@ public class DeckManager : MonoBehaviour
         deck = new Queue<CardData>(tempDeck);
         DeckAmountText.text = deck.Count.ToString();
         //for card in cards
+        numOfCardsInDeck = deck.Count;
         foreach (CardData card in deck)
         {
             Debug.Log("Card in deck: " + card.cardName);
@@ -25,12 +26,17 @@ public class DeckManager : MonoBehaviour
 
     public CardData DrawCard()
     {
+        if (deck.Count > 0)
+        {
+            numOfCardsInDeck--;
+        }
         return deck.Count > 0 ? deck.Dequeue() : null;
     }
 
     public void UpdateDeckAmount()
     {
         DeckAmountText.text = deck.Count.ToString();
+        numOfCardsInDeck = deck.Count;
     }
 
 
@@ -44,5 +50,11 @@ public class DeckManager : MonoBehaviour
             list[i] = list[randomIndex];
             list[randomIndex] = temp;
         }
+    }
+
+    public void refreshDeck(List<CardData> list)
+    {
+        deck = new Queue<CardData>(list);
+        numOfCardsInDeck = deck.Count;
     }
 }
