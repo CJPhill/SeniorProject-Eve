@@ -33,13 +33,10 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public SpriteRenderer rbSprite;
 
-    public bool menuActive = false;
     public bool inventoryActive = false;
 
-    [SerializeField] private GameObject menu = null;
     [SerializeField] private GameObject inventory = null;
 
-    public Camera uiCamera;
     public Image inventoryImage;
 
     private void Start()
@@ -53,7 +50,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        checkMenu();
         if (inventory)
         {
             checkInventory();
@@ -76,16 +72,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// 
 
-    private void checkMenu()
-    {
-        if (UserInput.instance.MenuOpenClose)
-        {
-            menuActive = !menuActive;
-            Debug.Log("Menu Active: " + menuActive);
-            menu.SetActive(menuActive);
-        }
-    }
-
     private void checkInventory(){
         if (UserInput.instance.InventoryOpenClose)
         {
@@ -97,8 +83,6 @@ public class PlayerController : MonoBehaviour
             {
                 inventoryImage.gameObject.SetActive(!inventoryImage.gameObject.activeSelf);
             }
-            // inventoryActive = !inventoryActive;
-            // inventory.SetActive(inventoryActive);
         }
     }
     private void FaceCamera()
@@ -172,22 +156,21 @@ public class PlayerController : MonoBehaviour
         if (GameObject.FindWithTag("Computer") != null)
         {
             GameObject computer = GameObject.FindWithTag("Computer");
-            Debug.Log("Object with tag exists in the scene.");
+            // Debug.Log("Object with tag exists in the scene.");
             if (computer.activeInHierarchy)
             {
                 playerCanMove = false;
-                Debug.Log("Can not move");
+                // Debug.Log("Can not move");
             }
             else
             {
                 playerCanMove = true;
-                
-            }
+            }   
         }
         else
         {
             playerCanMove = true;
-            Debug.Log("Can move");
+            // Debug.Log("Can move");
         }
     }
 
