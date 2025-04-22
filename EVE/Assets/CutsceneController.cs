@@ -10,6 +10,7 @@ public class CutsceneController : MonoBehaviour
     public TMP_Text welcomeText;
     public Image blackOverlay;
     public Image card;
+    public Button wakeUpButton;
 
     [Header("Creepy Flash Images")]
     public Sprite[] flashSprites;
@@ -53,7 +54,11 @@ public class CutsceneController : MonoBehaviour
         // Welcome screen
         welcomeText.gameObject.SetActive(true);
         card.gameObject.SetActive(true);
-        welcomeText.text = "Welcome EVE Unit!";
+
+        yield return TypeWelcome("Goodmorning EVE Unit! \n\nWe will be with you soon... \n\nYou are vital to project EDEN...\n\n--Oscorp Cares");
+        yield return new WaitForSeconds(1f);
+        wakeUpButton.gameObject.SetActive(true);
+
     }
 
     IEnumerator TypeDialogue(string text)
@@ -62,6 +67,16 @@ public class CutsceneController : MonoBehaviour
         foreach (char c in text)
         {
             dialogueText.text += c;
+            yield return new WaitForSeconds(typeSpeed);
+        }
+    }
+
+    IEnumerator TypeWelcome(string text)
+    {
+        welcomeText.text = "";
+        foreach (char c in text)
+        {
+            welcomeText.text += c;
             yield return new WaitForSeconds(typeSpeed);
         }
     }
