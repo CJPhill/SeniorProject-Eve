@@ -31,14 +31,13 @@ public class CutsceneController : MonoBehaviour
 
     IEnumerator PlayIntroSequence()
     {
-        // Mysterious dialogue
-        yield return TypeDialogue("Eve?");
+        yield return TypeDialogue("EVE?");
         yield return new WaitForSeconds(1.2f);
         yield return TypeDialogue("Do you read me?");
         yield return new WaitForSeconds(1.2f);
         yield return TypeDialogue("We need to--");
         yield return new WaitForSeconds(0.8f);
-        yield return TypeDialogue(" Eve we aren't going to make it you need to-");
+        yield return TypeDialogue("EVE we aren't going to make it you need to--");
         yield return new WaitForSeconds(0.8f);
         yield return TypeDialogue("REMEMBER");
         dialogueText.gameObject.SetActive(false);
@@ -55,7 +54,7 @@ public class CutsceneController : MonoBehaviour
         welcomeText.gameObject.SetActive(true);
         card.gameObject.SetActive(true);
 
-        yield return TypeWelcome("Goodmorning EVE Unit! \n\nWe will be with you soon... \n\nYou are vital to project EDEN...\n\n--Oscorp Cares");
+        yield return TypeWelcome("Good morning EVE Unit! \n\nWe will be with you soon... \n\nYou are vital to project EDEN...\n\n--Oscorp Cares");
         yield return new WaitForSeconds(1f);
         wakeUpButton.gameObject.SetActive(true);
 
