@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static Camera inventoryCamera;
     [SerializeField] RectTransform fader;
     [SerializeField] string sceneToLoad;
+    public string startScene;
 
 
     private void Awake()
@@ -25,7 +26,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(LoadAdditionalScenes());
         fader.gameObject.SetActive(true);
 
         LeanTween.scale(fader, new Vector3(1, 1, 1), 0);
@@ -49,9 +49,13 @@ public class GameManager : MonoBehaviour
     private void LoadScene()
     {
         if (!string.IsNullOrEmpty(sceneToLoad))
-        {
+        {   
             Debug.Log("SceneHandler: Loading scene " + sceneToLoad);
             SceneManager.LoadScene(sceneToLoad);
+            if (SceneManager.GetActiveScene().name == startScene) 
+            {
+                StartCoroutine(LoadAdditionalScenes());
+            }
         }
         else
         {
@@ -62,14 +66,16 @@ public class GameManager : MonoBehaviour
     IEnumerator LoadAdditionalScenes()
     {
         // Load Level Scene additively into CharacterScene
-        AsyncOperation loadLevel = SceneManager.LoadSceneAsync("Level", LoadSceneMode.Additive);
-        while (!loadLevel.isDone)
-            yield return null;
+        // AsyncOperation loadLevel = SceneManager.LoadSceneAsync("Level", LoadSceneMode.Additive);
+        // while (!loadLevel.isDone)
+        //     yield return null;
 
         // Load Inventory Scene additively into CharacterScene
         AsyncOperation loadInventory = SceneManager.LoadSceneAsync("InventoryFinish", LoadSceneMode.Additive);
         while (!loadInventory.isDone)
             yield return null;
+
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
         SetupInventoryCamera();
     }

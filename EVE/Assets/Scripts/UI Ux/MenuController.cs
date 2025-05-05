@@ -47,6 +47,8 @@ public class MenuController : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;
     private Resolution[] resolutions;
 
+    public GameManager gameManager;
+
     private void Start(){
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
@@ -69,7 +71,7 @@ public class MenuController : MonoBehaviour
     }
 
     public void NewGameDialogYes(){
-        SceneManager.LoadScene(_newGameScene);
+        gameManager.sceneCall(_newGameScene);
     }
 
     public void LoadGameDialogYes(){
