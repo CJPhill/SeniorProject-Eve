@@ -10,6 +10,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] RectTransform fader;
     [SerializeField] string sceneToLoad;
 
+
+    private void Awake()
+    {
+        // Check if an instance already exists
+        if (FindObjectsOfType<GameManager>().Length > 1)
+        {
+            Destroy(gameObject); // Destroy duplicate
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         StartCoroutine(LoadAdditionalScenes());
