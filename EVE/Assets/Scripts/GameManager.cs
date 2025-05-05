@@ -11,15 +11,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] string sceneToLoad;
     public string startScene;
 
+    public static GameManager Instance;
+
 
     private void Awake()
     {
         // Check if an instance already exists
-        if (FindObjectsOfType<GameManager>().Length > 1)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // Destroy duplicate
+            Destroy(gameObject);
             return;
         }
+
+        Instance = this;
 
         DontDestroyOnLoad(gameObject);
     }
