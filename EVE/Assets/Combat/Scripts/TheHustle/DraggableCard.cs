@@ -1,42 +1,45 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
+    private LayoutElement layoutElement;
 
     public CardSlot AssignedSlot { get; set; }
     public Transform playArea;
     public float swapRange = 100f;
+
     private Vector2 dragOffset;
     private TurnManager turnManager;
     private GraveyardManager graveyardManager;
+    private GameObject placeholder;
 
     private CardData cardData;
     public CardData CardData => cardData;
     private int cardMana;
 
-
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-        canvas = GetComponentInParent<Canvas>();  // Ensure we are getting the right canvas
+        layoutElement = GetComponent<LayoutElement>();
+        canvas = GetComponentInParent<Canvas>();
         graveyardManager = GameObject.FindAnyObjectByType<GraveyardManager>();
+        turnManager = GameObject.FindAnyObjectByType<TurnManager>();
+
         if (playArea == null)
         {
             var playAreaObject = GameObject.FindGameObjectWithTag("PlayArea");
             if (playAreaObject != null)
                 playArea = playAreaObject.transform;
         }
-        turnManager = GameObject.FindAnyObjectByType<TurnManager>();
-
-
     }
 
-    public void setup (CardData cardData)
+    public void setup(CardData cardData)
     {
         this.cardData = cardData;
         cardMana = cardData.manaCost;
@@ -45,6 +48,23 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnBeginDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = false;
+        layoutElement.ignoreLayout = true;
+
+        // Create placeholder to keep layout spacing
+        placeholder = new GameObject("Placeholder");
+        var rt = placeholder.AddComponent<RectTransform>();
+        LayoutElement le = placeholder.AddComponent<LayoutElement>();
+        le.preferredWidth = layoutElement.preferredWidth;
+        le.preferredHeight = layoutElement.preferredHeight;
+        le.flexibleWidth = 0;
+        le.flexibleHeight = 0;
+
+        int index = transform.GetSiblingIndex();
+        placeholder.transform.SetParent(transform.parent);
+        placeholder.transform.SetSiblingIndex(index);
+
+        transform.SetParent(canvas.transform, true);
+        transform.SetAsLastSibling();
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
@@ -58,61 +78,31 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
+        Vector3 globalMousePos;
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            rectTransform,
             eventData.position,
             canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
-            out var localPoint
-        );
-
-        rectTransform.anchoredPosition = localPoint + dragOffset;
+            out globalMousePos))
+        {
+            rectTransform.position = globalMousePos;
+        }
     }
-
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Re-enable raycasting after the drag ends
         canvasGroup.blocksRaycasts = true;
+        layoutElement.ignoreLayout = false;
 
-        // Snap to closest slot
-        CardSlot[] allSlots = FindObjectsOfType<CardSlot>();
-        CardSlot closest = null;
-        float closestDist = float.MaxValue;
-
-        foreach (var slot in allSlots)
+        if (placeholder != null)
         {
-            float dist = Vector2.Distance(transform.position, slot.transform.position);
-            if (dist < closestDist && slot != AssignedSlot)
-            {
-                closest = slot;
-                closestDist = dist;
-            }
+            int newIndex = placeholder.transform.GetSiblingIndex();
+            transform.SetParent(placeholder.transform.parent);
+            transform.SetSiblingIndex(newIndex);
+            Destroy(placeholder);
         }
 
-        if (closest != null && closestDist < swapRange)
-        {
-            // Swap cards between the slots
-            if (closest.currentCard != null)
-            {
-                var temp = closest.currentCard;
-                closest.currentCard = this;
-                AssignedSlot.currentCard = temp;
-
-                temp.AssignedSlot = AssignedSlot;
-                temp.transform.SetParent(AssignedSlot.transform);
-                temp.ResetPosition();
-            }
-            else
-            {
-                AssignedSlot.currentCard = null;
-                closest.currentCard = this;
-            }
-
-            AssignedSlot = closest;
-            transform.SetParent(closest.transform);
-            ResetPosition();
-        }
-        else if (IsInPlayArea())
+        if (IsInPlayArea())
         {
             PlayCard();
         }
@@ -124,7 +114,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void ResetPosition()
     {
-        // If you want to snap the card back to the assigned slot:
         if (AssignedSlot != null)
         {
             rectTransform.anchoredPosition = Vector2.zero;
@@ -133,7 +122,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private bool IsInPlayArea()
     {
-        Debug.Log("Checking if in play area");
         return RectTransformUtility.RectangleContainsScreenPoint(
             playArea as RectTransform,
             Input.mousePosition,
@@ -143,33 +131,16 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void PlayCard()
     {
-        Debug.Log("Play Card");
-
         if (turnManager.canPlayCard(cardMana))
         {
-            int currentMana = turnManager.PlayerManaCheck();
-            int maxMana = turnManager.PlayerMaxCheck();
-            Debug.Log("current card mana: " + cardMana);
-            Debug.Log("Current Player Mana: " + currentMana);
-            Debug.Log("Current Max Mana: " + maxMana);
-            // Trigger action, move to graveyard
-            //Debug.Log($"Played: {GetComponent<CardDisplay>().CardData.cardName}"); //NOTES: Currently bugs if run needs update on display
             graveyardManager.AddToGraveyard(cardData);
             turnManager.useCard(cardData);
             AssignedSlot.currentCard = null;
             Destroy(this.gameObject);
-            // Optionally: notify HandManager to refill hand
         }
         else
         {
             ResetPosition();
         }
-
     }
-
-
-
-
-
-
 }
