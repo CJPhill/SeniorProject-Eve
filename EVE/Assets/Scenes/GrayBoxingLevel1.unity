@@ -3748,7 +3748,7 @@ GameObject:
   - component: {fileID: 488763760}
   - component: {fileID: 488763759}
   - component: {fileID: 488763762}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: stairs(Interact)
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -4180,15 +4180,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 95aa054fe4b64104789d7a1ba25e84cd, type: 2}
     - target: {fileID: -6850649477931804350, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -5924683504314061156, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -5641027500785558347, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -5095154631391182478, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4244,7 +4244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3599152455300903839, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Name
@@ -4252,7 +4252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -392820287885467116, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4260,11 +4260,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 95aa054fe4b64104789d7a1ba25e84cd, type: 2}
     - target: {fileID: 1642965907638032904, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5133913965574556032, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5615024163288396257, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4272,7 +4272,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 95aa054fe4b64104789d7a1ba25e84cd, type: 2}
     - target: {fileID: 7530995387843108965, guid: 442a7ad46f75d47089dc79f54079fed4, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8939,7 +8939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fader: {fileID: 2001476636}
-  sceneToLoad: VanScene
+  sceneToLoad: CombatTest
 --- !u!1001 &1953432082
 PrefabInstance:
   m_ObjectHideFlags: 0

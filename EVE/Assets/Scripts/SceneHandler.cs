@@ -26,10 +26,8 @@ public class SceneHandler : MonoBehaviour, IInteractable
         LeanTween.scale(fader, new Vector3(1,1,1), 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
         {
             Invoke("LoadScene", 0.5f);
-
-    });
+        });
     }
-
     private void LoadScene(){
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
