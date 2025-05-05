@@ -1,9 +1,17 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IInteractable
 {
+    public GameManager Manager;
+
+    private void Start()
+    {
+        Manager = FindAnyObjectByType<GameManager>();
+    }
+
     public enum EnemyType
     {
         Normal,
@@ -11,13 +19,9 @@ public class Enemy : MonoBehaviour
         Boss
     }
 
-    //Trigger Battle
-    private void OnTriggerEnter(Collider other) {
-        SceneHandler sceneHandler = GetComponent<SceneHandler>();
-        if (sceneHandler != null)
-        {
-            Debug.Log("OnTriggerEnter");
-            sceneHandler.receiveInteract();
-        }
+    public void receiveInteract()
+    {
+        Manager.sceneCall("CombatTest");
     }
+
 }
