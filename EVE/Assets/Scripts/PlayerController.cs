@@ -39,6 +39,22 @@ public class PlayerController : MonoBehaviour
 
     public Image inventoryImage;
 
+    public static PlayerController player;
+
+    private void Awake()
+    {
+        // Check if an instance already exists
+        if (player != null && player != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        player = this;
+
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();

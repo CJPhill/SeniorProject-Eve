@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-
     private void Awake()
     {
         // Check if an instance already exists
@@ -37,6 +36,7 @@ public class GameManager : MonoBehaviour
         {
             fader.gameObject.SetActive(false);
         });
+        StartCoroutine(LoadAdditionalScenes());
     }
 
     public void sceneCall(string scene)
@@ -56,10 +56,12 @@ public class GameManager : MonoBehaviour
         {   
             Debug.Log("SceneHandler: Loading scene " + sceneToLoad);
             SceneManager.LoadScene(sceneToLoad);
-            if (SceneManager.GetActiveScene().name == startScene) 
-            {
-                StartCoroutine(LoadAdditionalScenes());
-            }
+            StartCoroutine(LoadAdditionalScenes());
+
+            // if (SceneManager.GetActiveScene().name == startScene) 
+            // {
+            //     StartCoroutine(LoadAdditionalScenes());
+            // }
         }
         else
         {
@@ -75,6 +77,7 @@ public class GameManager : MonoBehaviour
         //     yield return null;
 
         // Load Inventory Scene additively into CharacterScene
+        Debug.Log("SceneHandler: Loading InventoryFinish");
         AsyncOperation loadInventory = SceneManager.LoadSceneAsync("InventoryFinish", LoadSceneMode.Additive);
         while (!loadInventory.isDone)
             yield return null;
