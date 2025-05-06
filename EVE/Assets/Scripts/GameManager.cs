@@ -1,7 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.Video;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,9 +15,15 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
+    // Static flag to track if the video has already been played
+    private static bool hasVideoPlayed = false;
+
+    // Reference to RawImage and VideoPlayer
+    public RawImage videoRawImage;
+    public VideoPlayer videoPlayer;
+
     private void Awake()
     {
-        // Check if an instance already exists
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -23,79 +31,168 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         fader.gameObject.SetActive(true);
+        fader.localScale = new Vector3(1, 1, 1);
 
-        LeanTween.scale(fader, new Vector3(1, 1, 1), 0);
-        LeanTween.scale(fader, Vector3.zero, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        PlayFadeIn(() =>
         {
-            fader.gameObject.SetActive(false);
+            StartCoroutine(LoadAdditionalScenes());
         });
-        StartCoroutine(LoadAdditionalScenes());
     }
 
     public void sceneCall(string scene)
     {
-        Debug.Log("SceneHandler: receiveInteract");
         sceneToLoad = scene;
-        fader.gameObject.SetActive(true);
-        LeanTween.scale(fader, Vector3.zero, 0f);
-        LeanTween.scale(fader, new Vector3(1, 1, 1), 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        PlayFadeOut(() =>
         {
-            Invoke("LoadScene", 0.5f);
+            Invoke(nameof(LoadScene), 0.1f); // small delay for visual polish
         });
     }
+
     private void LoadScene()
     {
         if (!string.IsNullOrEmpty(sceneToLoad))
-        {   
-            Debug.Log("SceneHandler: Loading scene " + sceneToLoad);
-            SceneManager.LoadScene(sceneToLoad);
-            StartCoroutine(LoadAdditionalScenes());
+        {
+            string previousScene = SceneManager.GetActiveScene().name;
 
-            // if (SceneManager.GetActiveScene().name == startScene) 
-            // {
-            //     StartCoroutine(LoadAdditionalScenes());
-            // }
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.LoadScene(sceneToLoad);
+
+            if (sceneToLoad == "VanScene")
+            {
+                GameObject player = GameObject.FindWithTag("Player");
+                if (player != null)
+                {
+                    player.SetActive(false);
+                }
+            }
+            else if (previousScene == "VanScene")
+            {
+                GameObject scenePlayer = GameObject.FindWithTag("Player");
+
+                // Only destroy scenePlayer if it’s not the persistent one
+                if (scenePlayer != null)
+                {
+                    Destroy(scenePlayer);
+                }
+
+                GameObject persistentPlayer = GameObject.FindWithTag("Player");
+                if (persistentPlayer != null)
+                {
+                    persistentPlayer.SetActive(true);
+                }
+            }
         }
         else
         {
-            Debug.LogWarning("SceneHandler: targetSceneName is not set!");
+            Debug.LogWarning("GameManager: sceneToLoad is not set!");
         }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        StartCoroutine(LoadAdditionalScenes());
+        PlayFadeIn();
     }
 
     IEnumerator LoadAdditionalScenes()
     {
-        // Load Level Scene additively into CharacterScene
-        // AsyncOperation loadLevel = SceneManager.LoadSceneAsync("Level", LoadSceneMode.Additive);
-        // while (!loadLevel.isDone)
-        //     yield return null;
-
-        // Load Inventory Scene additively into CharacterScene
-        Debug.Log("SceneHandler: Loading InventoryFinish");
+        Debug.Log("GameManager: Loading InventoryFinish");
         AsyncOperation loadInventory = SceneManager.LoadSceneAsync("InventoryFinish", LoadSceneMode.Additive);
         while (!loadInventory.isDone)
             yield return null;
 
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        // Ensure EventSystem is active
+        EventSystem eventSystem = FindObjectOfType<EventSystem>();
+        if (eventSystem != null)
+        {
+            eventSystem.gameObject.SetActive(true);
+        }
+
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<Camera>();
 
         SetupInventoryCamera();
+
+        // Play video if it hasn't been played already
+        if (!hasVideoPlayed)
+        {
+            PlayIntroVideo();
+        }
     }
 
     void SetupInventoryCamera()
     {
-        inventoryCamera = GameObject.FindGameObjectWithTag("InventoryCamera").GetComponent<Camera>();
+        inventoryCamera = GameObject.FindGameObjectWithTag("InventoryCamera")?.GetComponent<Camera>();
 
-        inventoryCamera.transform.SetParent(mainCamera.transform, worldPositionStays: false);
-        inventoryCamera.transform.localPosition = Vector3.zero;
-        inventoryCamera.transform.localRotation = Quaternion.identity;
+        if (inventoryCamera != null && mainCamera != null)
+        {
+            inventoryCamera.transform.SetParent(mainCamera.transform, worldPositionStays: false);
+            inventoryCamera.transform.localPosition = Vector3.zero;
+            inventoryCamera.transform.localRotation = Quaternion.identity;
+            inventoryCamera.rect = new Rect(0.2f, 0.2f, 0.6f, 0.6f);
+            inventoryCamera.enabled = false; // Initially disable it
+        }
+    }
 
-        inventoryCamera.rect = new Rect(0.2f, 0.2f, 0.6f, 0.6f);
-        inventoryCamera.enabled = false;
+    public void PlayIntroVideo()
+    {
+        // Ensure the video only plays once
+        if (videoPlayer != null && videoRawImage != null)
+        {
+            videoRawImage.gameObject.SetActive(true);
+            videoPlayer.Play();
+            videoPlayer.loopPointReached += OnVideoEnd;
+        }
+    }
+
+    // Called when the video finishes
+    private void OnVideoEnd(VideoPlayer vp)
+    {
+        videoRawImage.gameObject.SetActive(false);  // Hide the video after it finishes
+        hasVideoPlayed = true;  // Mark the video as played
+        EnableInventoryUI();  // Enable UI interaction after video ends
+    }
+
+    // Enable the UI elements in the inventory scene
+    void EnableInventoryUI()
+    {
+        var uiElements = GameObject.FindGameObjectsWithTag("InventoryUI"); // Assuming your UI has a common tag
+        foreach (var element in uiElements)
+        {
+            element.SetActive(true);
+        }
+
+        // Enable the inventory camera for interaction
+        if (inventoryCamera != null)
+        {
+            inventoryCamera.enabled = true;
+        }
+    }
+
+    public void PlayFadeIn(System.Action onComplete = null)
+    {
+        fader.gameObject.SetActive(true);
+        fader.localScale = new Vector3(1, 1, 1);
+        LeanTween.scale(fader, Vector3.zero, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        {
+            fader.gameObject.SetActive(false);
+            onComplete?.Invoke();
+        });
+    }
+
+    public void PlayFadeOut(System.Action onComplete = null)
+    {
+        fader.gameObject.SetActive(true);
+        fader.localScale = Vector3.zero;
+        LeanTween.scale(fader, new Vector3(1, 1, 1), 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        {
+            onComplete?.Invoke();
+        });
     }
 }

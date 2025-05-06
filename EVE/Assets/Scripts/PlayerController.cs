@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Properties;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -28,7 +25,6 @@ public class PlayerController : MonoBehaviour
     public GameObject interactSprite;
 
     public GameObject camera;
-
     public LayerMask terrainLayer;
     public Rigidbody rb;
     public SpriteRenderer rbSprite;
@@ -36,24 +32,7 @@ public class PlayerController : MonoBehaviour
     public bool inventoryActive = false;
 
     [SerializeField] private GameObject inventory = null;
-
     public Image inventoryImage;
-
-    public static PlayerController player;
-
-    private void Awake()
-    {
-        // Check if an instance already exists
-        if (player != null && player != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        player = this;
-
-        DontDestroyOnLoad(gameObject);
-    }
 
     private void Start()
     {
@@ -70,46 +49,44 @@ public class PlayerController : MonoBehaviour
         {
             checkInventory();
         }
-        if(!DialogController.talking){
+
+        if (!DialogController.talking)
+        {
             movePlayer();
             FaceCamera();
         }
+
         interactCheck();
+
         if (interactObject)
         {
             interactBought();
         }
+
         typingCheck();
-        
     }
 
-    /// <summary>
-    /// ITEMS RELATED to UI/Keys
-    /// </summary>
-    /// 
-
-    private void checkInventory(){
+    private void checkInventory()
+    {
         if (UserInput.instance.InventoryOpenClose)
         {
             if (GameManager.inventoryCamera != null)
             {
-                GameManager.inventoryCamera.enabled = !GameManager.inventoryCamera.enabled;    
+                GameManager.inventoryCamera.enabled = !GameManager.inventoryCamera.enabled;
             }
+
             if (inventoryImage != null)
             {
                 inventoryImage.gameObject.SetActive(!inventoryImage.gameObject.activeSelf);
             }
         }
     }
+
     private void FaceCamera()
     {
-        // Get the direction from the sprite to the camera
         Vector3 directionToCamera = cameraTransform.position - rbSprite.transform.position;
-
-        // Set the y-component to zero to keep the rotation on the horizontal plane
         directionToCamera.y = 0;
 
-        // Rotate the sprite to face the camera
         if (directionToCamera != Vector3.zero)
         {
             rbSprite.transform.rotation = Quaternion.LookRotation(-directionToCamera);
@@ -117,20 +94,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    /// Movement related code
-    /// </summary>
     private void movePlayer()
     {
         if (playerCanMove)
         {
-            // Get movement input
             moveInput.x = UserInput.instance.MoveInput.x;
             moveInput.y = UserInput.instance.MoveInput.y;
             moveInput.Normalize();
 
-            //Camera forward
             Vector3 cameraForward = cameraTransform.forward;
             cameraForward.y = 0;
             cameraForward.Normalize();
@@ -140,67 +111,30 @@ public class PlayerController : MonoBehaviour
             cameraRight.Normalize();
 
             Vector3 movementDirection = (cameraRight * moveInput.x + cameraForward * moveInput.y) * moveSpeed;
-            //rb.velocity = new Vector3(moveInput.x * moveSpeed, rb.velocity.y, moveInput.y * moveSpeed); //Old movement
             rb.velocity = new Vector3(movementDirection.x, rb.velocity.y, movementDirection.z);
 
-            // Calculate movement magnitude
-            float movementMagnitude = moveInput.magnitude;
+            animator.SetFloat("xVelocity", moveInput.magnitude * moveSpeed);
 
-            // Set Animator parameter for blend tree
-            animator.SetFloat("xVelocity", movementMagnitude * moveSpeed);
-
-            //Sprite Flipping
-            if (moveInput.x != 0 && moveInput.x < 0)
+            if (moveInput.x != 0)
             {
-                rbSprite.flipX = true;
-            }
-            else if (moveInput.x != 0 && moveInput.x > 0)
-            {
-                rbSprite.flipX = false;
+                rbSprite.flipX = moveInput.x < 0;
             }
         }
-        
     }
-
-    /// <summary>
-    /// Scripts dealing with collision/Interaction
-    /// </summary>
-    /// 
 
     private void typingCheck()
     {
-        if (GameObject.FindWithTag("Computer") != null)
-        {
-            GameObject computer = GameObject.FindWithTag("Computer");
-            // Debug.Log("Object with tag exists in the scene.");
-            if (computer.activeInHierarchy)
-            {
-                playerCanMove = false;
-                // Debug.Log("Can not move");
-            }
-            else
-            {
-                playerCanMove = true;
-            }   
-        }
-        else
-        {
-            playerCanMove = true;
-            // Debug.Log("Can move");
-        }
+        GameObject computer = GameObject.FindWithTag("Computer");
+        playerCanMove = (computer == null || !computer.activeInHierarchy);
     }
 
     private void interactCheck()
     {
         if (Input.GetKeyDown(KeyCode.E) && playerCanInteract)
         {
-            // Trigger the interact animation
             animator.SetBool("isInteracting", true);
-
-            // Optionally, reset the animation after a short delay
             StartCoroutine(ResetInteractAnimation());
 
-            // Check if the collided object has a component that implements IInteractable
             IInteractable interactable = interactObject.GetComponent<IInteractable>();
             if (interactable != null)
             {
@@ -221,25 +155,20 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ResetInteractAnimation()
     {
-        yield return new WaitForSeconds(1.0f); // Adjust the duration to match your animation length
+        yield return new WaitForSeconds(1.0f);
         animator.SetBool("isInteracting", false);
     }
-
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Interactable"))
         {
-            //Show Prompt to Interact
             playerCanInteract = true;
             interactObject = collision.gameObject;
             interactSprite.SetActive(true);
-            
-            
         }
     }
 
-    
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Interactable"))
@@ -249,6 +178,4 @@ public class PlayerController : MonoBehaviour
             interactSprite.SetActive(false);
         }
     }
-
-
 }
