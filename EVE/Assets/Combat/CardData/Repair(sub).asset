@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Repair(sub)
   m_EditorClassIdentifier: 
   cardName: Repair
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: ddc17d11c5d89454a94cdf551526ebbf, type: 3}
   description: Heal yourself - 5 Health
   manaCost: 1
   rarity: 0

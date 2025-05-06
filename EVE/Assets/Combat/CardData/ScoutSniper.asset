@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ScoutSniper
   m_EditorClassIdentifier: 
   cardName: Scout - Sniper
-  artwork: {fileID: 0}
-  description: Deal 10 Damage, If Scan active stun enemy (does not stack)
+  artwork: {fileID: 21300000, guid: 8e95725ae0633d949a81c5e753cab8de, type: 3}
+  description: Deal 10 Damage, If Scan active stun.
   manaCost: 3
   rarity: 0
   cardType: 3

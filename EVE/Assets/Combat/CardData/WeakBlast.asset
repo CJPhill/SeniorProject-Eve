@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WeakBlast
   m_EditorClassIdentifier: 
   cardName: Weak Blast
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: d10365ac45f9643429d317ae11663e37, type: 3}
   description: Attack - 5 Damage
   manaCost: 1
   rarity: 0

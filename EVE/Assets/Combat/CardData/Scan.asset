@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Scan
   m_EditorClassIdentifier: 
   cardName: Scan
-  artwork: {fileID: 0}
-  description: Scan the Enemy - Activate sub effects for Scout cards
+  artwork: {fileID: 21300000, guid: f100a14c9d7a93c46be663bcf3596925, type: 3}
+  description: Activate effects for Scout cards
   manaCost: 1
   rarity: 0
   cardType: 2
